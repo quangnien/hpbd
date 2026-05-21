@@ -3,7 +3,12 @@
     "allow": [
       "Bash(Get-ChildItem -Recurse -Force)",
       "Bash(Select-Object FullName)",
-      "Bash(Head -100)"
+      "Bash(Head -100)",
+      "Bash(python *)",
+      "Bash(node -e ' *)",
+      "Skill(claude-mem:make-plan)",
+      "Bash(Get-ChildItem *)",
+      "Bash(git add *)"
     ]
   }
 }

@@ -1,0 +1,54 @@
+<!doctype html>
+<html data-theme="dark" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>404 — Thomas Nguyen</title>
+    <link rel="shortcut icon" type="image/png" href="assets/logo/man.png"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #060b18;
+            color: #e2e7f5;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 24px;
+        }
+        .err-code {
+            font-size: clamp(4rem, 15vw, 7rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #b636ff, #00d4a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+        .err-msg  { font-size: 1rem; color: #8891a8; margin: 14px 0 32px; }
+        .back-btn {
+            display: inline-block;
+            padding: 11px 30px;
+            border: 1px solid #b636ff;
+            border-radius: 8px;
+            color: #b636ff;
+            text-decoration: none;
+            font-size: 14px;
+            font-family: inherit;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+        .back-btn:hover { background: rgba(182,54,255,0.14); transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="err-code">404</div>
+        <p class="err-msg">Page not found &mdash; this path doesn&rsquo;t exist.</p>
+        <a class="back-btn" href="/prsn/">Back to portfolio</a>
+    </div>
+</body>
+</html>

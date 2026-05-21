@@ -1,11 +1,22 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" data-theme="light" lang="en">
 
-    <head >
+    <head>
         <!-- meta data -->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#f4f5fa" id="meta-theme-color">
+        <meta name="robots" content="index, follow">
+        <link rel="canonical" href="https://quangnien.github.io/prsn/">
+        <meta property="og:url" content="https://quangnien.github.io/prsn/">
+        <meta property="og:image" content="https://quangnien.github.io/prsn/assets/images/about/avt-muagiay2.jpg">
+        <meta property="og:image:width" content="800">
+        <meta property="og:image:height" content="800">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Thomas Nguyen — Java Software Engineer">
+        <meta name="twitter:description" content="Java Software Engineer with 4+ years building fintech & banking systems with Spring Boot and Microservices.">
+        <meta name="twitter:image" content="https://quangnien.github.io/prsn/assets/images/about/avt-muagiay2.jpg">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <meta name="description" content="Thomas Nguyen — Java Software Engineer with 4+ years of experience building scalable backend systems. Expertise in Spring Boot, Microservices, and Fintech solutions.">
         <meta name="keywords" content="Java Developer, Spring Boot, Backend Engineer, Software Engineer, Fintech, Microservices, Thomas Nguyen, Vietnam">
@@ -15,13 +26,15 @@
         <meta property="og:type" content="website">
 
         <!--font-family-->
-		<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&amp;subset=devanagari,latin-ext" rel="stylesheet">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
         <!-- title of site -->
         <title>Thomas Nguyen — Java Software Engineer</title>
 
         <!-- For favicon png -->
-		<link rel="shortcut icon" type="image/icon" href="assets/logo/man.png"/>
+		<link rel="shortcut icon" type="image/png" href="assets/logo/man.png"/>
        
         <!--font-awesome.min.css-->
         <link rel="stylesheet" href="assets/css/font-awesome.min.css">
@@ -59,6 +72,10 @@
     </head>
 	
 	<body>
+		<!-- Background layers -->
+		<div class="mesh-bg"></div>
+		<div class="grain-overlay"></div>
+
 		<!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
@@ -73,7 +90,7 @@
 
 			            <!-- Start Header Navigation -->
 			            <div class="navbar-header">
-			                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+			                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu" aria-expanded="false" aria-controls="navbar-menu" aria-label="Toggle navigation">
 			                    <i class="fa fa-bars"></i>
 			                </button>
 			                <a class="navbar-brand" href="index.html">Thomas Nguyen</a>
@@ -87,8 +104,14 @@
 			                    <li class="smooth-menu"><a href="#education">education</a></li>
 			                    <li class="smooth-menu"><a href="#skills">skills</a></li>
 			                    <li class="smooth-menu"><a href="#experience">experience</a></li>
-			                    <li class="smooth-menu"><a href="#portfolio">blog</a></li>
+			                    <li class="smooth-menu"><a href="#portfolio">journey</a></li>
 			                    <li class="smooth-menu"><a href="#contact">contact</a></li>
+			                    <li class="theme-nav-item">
+			                        <button class="theme-pill-btn" id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+			                            <div class="theme-pip"></div>
+			                            <span id="theme-label">Light</span>
+			                        </button>
+			                    </li>
 			                </ul><!--/.nav -->
 			            </div><!-- /.navbar-collapse -->
 			        </div><!--/.container-->
@@ -103,18 +126,56 @@
 	
 		<!--welcome-hero start -->
 		<section id="welcome-hero" class="welcome-hero">
+			<canvas id="hero-canvas" aria-hidden="true"></canvas>
+			<noscript><style>#hero-canvas,#pdf-viewer,.grain-overlay,.mesh-bg{display:none}.fade-in-section{opacity:1;transform:none}</style></noscript>
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12 text-center">
 						<div class="header-text">
-							<h2>hi <span>,</span> i am <br> Thomas Nguyen.<br> <span></span>   </h2>
+							<h2>hi <span>,</span> i am <br> <span class="hero-name-grad">Thomas Nguyen.</span></h2>
 							<p><span id="typing-text">Java Back-End Developer</span><span class="typing-cursor"></span></p>
+
+						<!-- Hero stats bar -->
+						<div class="hero-stats-row">
+							<div class="hero-stat-item">
+								<span class="hero-stat-num">4+</span>
+								<span class="hero-stat-lbl">Years<br>Experience</span>
+							</div>
+							<div class="hero-stat-sep"></div>
+							<div class="hero-stat-item">
+								<span class="hero-stat-num">7</span>
+								<span class="hero-stat-lbl">Projects<br>Delivered</span>
+							</div>
+							<div class="hero-stat-sep"></div>
+							<div class="hero-stat-item">
+								<span class="hero-stat-num">3</span>
+								<span class="hero-stat-lbl">Industry<br>Domains</span>
+							</div>
+							<div class="hero-stat-sep"></div>
+							<div class="hero-stat-item">
+								<span class="hero-stat-num">2</span>
+								<span class="hero-stat-lbl">Tech<br>Companies</span>
+							</div>
+						</div>
 							<div class="btn-container">
 								<button id="btn-view" class="btn-view">View CV</button>
 								<button id="btn-close" class="btn-close">Close CV</button>
 								<a href="assets/download/CV_MIDDLE_JAVA_NGUYENQUANGNIEN.pdf" download class="btn-download">Download CV</a>
 							</div>
 							
+							<!-- Hero quick links -->
+							<div class="hero-quick-links">
+								<a href="https://www.linkedin.com/in/ni%C3%AAn-nguy%E1%BB%85n-quang-12871124a/" target="_blank" rel="noopener noreferrer" class="hero-quick-link">
+									<i class="fa fa-linkedin" aria-hidden="true"></i> LinkedIn
+								</a>
+								<a href="https://github.com/quangnien" target="_blank" rel="noopener noreferrer" class="hero-quick-link">
+									<i class="fa fa-github" aria-hidden="true"></i> GitHub
+								</a>
+								<a href="#contact" class="hero-quick-link smooth-menu">
+									<i class="fa fa-envelope" aria-hidden="true"></i> Contact Me
+								</a>
+							</div>
+
 							<div id="pdf-viewer">
 								<iframe id="pdf-frame" src="" width="100%" height="500px" title="Thomas Nguyen — CV"></iframe>
 							</div>
@@ -123,6 +184,7 @@
 				</div><!-- /.row-->
 			</div><!-- /.container-->
 
+			<div class="hero-scroll-hint">scroll</div>
 		</section><!--/.welcome-hero-->
 		<!--welcome-hero end -->
 
@@ -130,6 +192,7 @@
 		<!--about start -->
 		<section id="about" class="about">
 			<div class="section-heading text-center fade-in-section">
+				<div class="section-tag-label">about</div>
 				<h2>about me</h2>
 			</div>
 			<div class="container">
@@ -137,7 +200,7 @@
 					<div class="row">
 						<div class="col-sm-6">
 							<div class="single-about-txt fade-in-section">
-								<h3>Java Software Engineer with 4+ years of experience — currently building enterprise fintech solutions at <span style="color:#d92cf9;">Amaris Consulting</span> within an international team environment.</h3>
+								<h3>Java Software Engineer with 4+ years of experience — currently building enterprise fintech solutions at <span class="company-amaris">Amaris Consulting</span> within an international team environment.</h3>
 								<p>
 								   I specialise in <strong>Java, Spring Boot, Microservices architecture, and SQL</strong>, having delivered production-grade backend systems across <strong>fintech, banking, manufacturing, and SaaS</strong> domains.
 								   I actively leverage <strong>AI-assisted development tools</strong> (GitHub Copilot, ChatGPT) to accelerate delivery and improve code quality.
@@ -189,7 +252,7 @@
 						</div>
 						<div class="col-sm-offset-1 col-sm-5">
 							<div class="single-about-img fade-in-section">
-								<!-- <img src="assets/images/about/profile_image.jpg" alt="profile_image"> -->
+								<!-- <img src="assets/images/about/profile_image.jpg" alt="Thomas Nguyen — Java Software Engineer"> -->
 								<img src="assets/images/about/avt-muagiay2.jpg" alt="profile_image">
 								<div class="about-list-icon">
 									<ul>
@@ -233,6 +296,7 @@
 		<!--education start -->
 		<section id="education" class="education">
 			<div class="section-heading text-center fade-in-section">
+				<div class="section-tag-label">education</div>
 				<h2>education</h2>
 			</div>
 			<div class="container">
@@ -297,6 +361,7 @@
 		<section id="skills" class="skills">
 				<div class="skill-content">
 					<div class="section-heading text-center fade-in-section">
+						<div class="section-tag-label">technical</div>
 						<h2>skills</h2>
 					</div>
 					<div class="container">
@@ -426,9 +491,141 @@
 		</section><!--/.skills-->
 		<!--skills end -->
 
+		<!--roadmap start -->
+		<section id="roadmap" class="skill-roadmap">
+			<div class="section-heading text-center fade-in-section">
+				<div class="section-tag-label">visual map</div>
+				<h2>tech roadmap</h2>
+				<p class="rm-intro">My Java backend engineering stack &mdash; from core to modern tooling.</p>
+			</div>
+			<div class="container">
+				<div class="roadmap-board fade-in-section" id="roadmap-board">
+					<svg id="roadmap-svg" class="roadmap-svg" aria-hidden="true"></svg>
+
+					<!-- Tier 1: Foundation -->
+					<div class="rm-tier">
+						<div class="rm-node rm-expert" data-rmid="java" data-tooltip="OOP · Generics · Streams · Concurrency · Collections">
+							<span class="rm-dot"></span>
+							<span class="rm-icon">☕</span>
+							<div class="rm-text"><span class="rm-name">Java</span><span class="rm-sub">Core Foundation</span></div>
+						</div>
+					</div>
+
+					<!-- Tier 2: Spring Ecosystem -->
+					<div class="rm-tier">
+						<div class="rm-node rm-expert" data-rmid="spring-boot" data-tooltip="Auto-config · Actuator · Profiles · Starter dependencies">
+							<span class="rm-dot"></span>
+							<span class="rm-icon">🍃</span>
+							<div class="rm-text"><span class="rm-name">Spring Boot</span><span class="rm-sub">Framework Core</span></div>
+						</div>
+						<div class="rm-node rm-expert" data-rmid="spring-mvc" data-tooltip="REST Controllers · Filters · Validation · Exception handling">
+							<span class="rm-dot"></span>
+							<span class="rm-icon">🔗</span>
+							<div class="rm-text"><span class="rm-name">Spring MVC</span><span class="rm-sub">Web Layer</span></div>
+						</div>
+						<div class="rm-node rm-proficient" data-rmid="spring-security" data-tooltip="JWT · OAuth2 · Role-based access control · Security filters">
+							<span class="rm-dot"></span>
+							<span class="rm-icon">🔐</span>
+							<div class="rm-text"><span class="rm-name">Spring Security</span><span class="rm-sub">Auth &amp; Access</span></div>
+						</div>
+					</div>
+
+					<!-- Tier 3: Data Layer -->
+					<div class="rm-tier">
+						<div class="rm-node rm-proficient" data-rmid="postgresql" data-tooltip="Complex joins · Indexing · Query optimisation · Transactions">
+							<span class="rm-dot"></span>
+							<span class="rm-icon">🐘</span>
+							<div class="rm-text"><span class="rm-name">PostgreSQL</span><span class="rm-sub">Primary DB</span></div>
+						</div>
+						<div class="rm-node rm-proficient" data-rmid="jpa" data-tooltip="ORM mapping · Lazy loading · JPQL · Entity relationships">
+							<span class="rm-dot"></span>
+							<span class="rm-icon">💾</span>
+							<div class="rm-text"><span class="rm-name">JPA / Hibernate</span><span class="rm-sub">ORM Layer</span></div>
+						</div>
+						<div class="rm-node rm-proficient" data-rmid="mysql" data-tooltip="Schema design · Stored procedures · Index tuning">
+							<span class="rm-dot"></span>
+							<span class="rm-icon">🗄️</span>
+							<div class="rm-text"><span class="rm-name">MySQL</span><span class="rm-sub">Relational DB</span></div>
+						</div>
+						<div class="rm-node rm-learning" data-rmid="redis" data-tooltip="Caching · Session management · Pub/Sub patterns">
+							<span class="rm-dot"></span>
+							<span class="rm-icon">⚡</span>
+							<div class="rm-text"><span class="rm-name">Redis</span><span class="rm-sub">Cache Layer</span></div>
+						</div>
+					</div>
+
+					<!-- Tier 4: Integration & Architecture -->
+					<div class="rm-tier">
+						<div class="rm-node rm-proficient" data-rmid="microservices" data-tooltip="Service decomposition · API Gateway · Circuit breaker · Service discovery">
+							<span class="rm-dot"></span>
+							<span class="rm-icon">🏗️</span>
+							<div class="rm-text"><span class="rm-name">Microservices</span><span class="rm-sub">Architecture</span></div>
+						</div>
+						<div class="rm-node rm-proficient" data-rmid="rest-api" data-tooltip="OpenAPI/Swagger · Versioning · Rate limiting · Error standards">
+							<span class="rm-dot"></span>
+							<span class="rm-icon">🌐</span>
+							<div class="rm-text"><span class="rm-name">REST API</span><span class="rm-sub">Integration</span></div>
+						</div>
+						<div class="rm-node rm-learning" data-rmid="kafka" data-tooltip="Event streaming · Consumer groups · Topic partitioning · Dead-letter queues">
+							<span class="rm-dot"></span>
+							<span class="rm-icon">📨</span>
+							<div class="rm-text"><span class="rm-name">Apache Kafka</span><span class="rm-sub">Messaging</span></div>
+						</div>
+					</div>
+
+					<!-- Tier 5: DevOps & Workflow -->
+					<div class="rm-tier">
+						<div class="rm-node rm-expert" data-rmid="git" data-tooltip="Branching strategies · Code review · CI/CD · GitHub Actions">
+							<span class="rm-dot"></span>
+							<span class="rm-icon">📦</span>
+							<div class="rm-text"><span class="rm-name">Git</span><span class="rm-sub">Version Control</span></div>
+						</div>
+						<div class="rm-node rm-proficient" data-rmid="maven" data-tooltip="Dependency management · Build lifecycle · Multi-module projects">
+							<span class="rm-dot"></span>
+							<span class="rm-icon">⚙️</span>
+							<div class="rm-text"><span class="rm-name">Maven / Gradle</span><span class="rm-sub">Build Tools</span></div>
+						</div>
+						<div class="rm-node rm-learning" data-rmid="docker" data-tooltip="Containerisation · Docker Compose · Image optimisation">
+							<span class="rm-dot"></span>
+							<span class="rm-icon">🐳</span>
+							<div class="rm-text"><span class="rm-name">Docker</span><span class="rm-sub">DevOps</span></div>
+						</div>
+						<div class="rm-node rm-proficient" data-rmid="agile" data-tooltip="Sprint planning · Retrospectives · Jira · Cross-team collaboration">
+							<span class="rm-dot"></span>
+							<span class="rm-icon">🏃</span>
+							<div class="rm-text"><span class="rm-name">Agile / Scrum</span><span class="rm-sub">Methodology</span></div>
+						</div>
+					</div>
+
+					<!-- Tier 6: Modern & Soft Skills -->
+					<div class="rm-tier">
+						<div class="rm-node rm-proficient" data-rmid="ai-tools" data-tooltip="GitHub Copilot · ChatGPT · AI-assisted code review and generation">
+							<span class="rm-dot"></span>
+							<span class="rm-icon">🤖</span>
+							<div class="rm-text"><span class="rm-name">AI Dev Tools</span><span class="rm-sub">Productivity</span></div>
+						</div>
+						<div class="rm-node rm-proficient" data-rmid="english" data-tooltip="B2 level · Daily collaboration with international teams at Amaris">
+							<span class="rm-dot"></span>
+							<span class="rm-icon">🌏</span>
+							<div class="rm-text"><span class="rm-name">English B2</span><span class="rm-sub">Communication</span></div>
+						</div>
+					</div>
+
+				</div><!--/.roadmap-board-->
+
+				<div class="rm-legend fade-in-section">
+					<div class="rm-legend-item"><span class="rm-ldot rm-expert"></span>Expert &mdash; daily production use</div>
+					<div class="rm-legend-item"><span class="rm-ldot rm-proficient"></span>Proficient &mdash; multiple shipped projects</div>
+					<div class="rm-legend-item"><span class="rm-ldot rm-learning"></span>Growing &mdash; building experience</div>
+				</div>
+			</div><!--/.container-->
+		</section>
+		<!--roadmap end -->
+
 		<!--experience start -->
 		<section id="experience" class="experience">
 			<div class="section-heading text-center fade-in-section">
+				<div class="section-tag-label">work history</div>
 				<h2>experience</h2>
 			</div>
 			<div class="container">
@@ -727,7 +924,8 @@
 		<section id="portfolio" class="portfolio">
 			<div class="portfolio-details">
 				<div class="section-heading text-center fade-in-section">
-					<h2>blog</h2>
+					<div class="section-tag-label">career &amp; life</div>
+					<h2>My Journey</h2>
 				</div>
 				<div class="container">
 					<div class="portfolio-content">
@@ -736,19 +934,19 @@
 		
 								<div class="col-sm-4">
 									<div class="item">
-										<img src="assets/images/portfolio/blog-huychuong.jpg" alt="Medal" loading="lazy"/>
+										<img src="assets/images/portfolio/blog-huychuong.jpg" alt="Academic Excellence Awards — Mathematics &amp; Chess" loading="lazy"/>
 										<div class="isotope-overlay">
 											<p>Medal</p>
 										</div>
 										<div class="portfolio-description">
-											<h3>Medal</h3>
-											<p>Medals for mathematics prizes and provincial chess tournaments, and student open chess tournaments.</p>
-											<span class="date">2017, 2018, 2019, 2020</span> </br>
+											<h3>Academic Awards</h3>
+											<p>Provincial mathematics prizes and chess tournament medals from Le Quy Don Gifted High School.</p>
+											<span class="date">2017 &ndash; 2020</span>
 										</div>
 									</div>
 
 									<div class="item">
-										<img src="assets/images/portfolio/blog-damcuoi.jpg" alt="Sister's wedding" loading="lazy"/>
+										<img src="assets/images/portfolio/blog-damcuoi.jpg" alt="Family Milestone — Sister's Wedding 2023" loading="lazy"/>
 										<div class="isotope-overlay">
 											<p>Sister's wedding</p>
 										</div>
@@ -764,52 +962,52 @@
 								<div class="col-sm-4">
 
 									<div class="item">
-										<img src="assets/images/portfolio/blog-tn-nien.jpg" alt="nien's graduation" loading="lazy"/>
+										<img src="assets/images/portfolio/blog-tn-nien.jpg" alt="PTIT Graduation 2024" loading="lazy"/>
 										<div class="isotope-overlay">
-											<p>nien's graduation</p>
+											<p>PTIT Graduation &rsquo;24</p>
 										</div>
 										<div class="portfolio-description">
-											<h3>nien's graduation</h3>
-											<p>Graduated with a very good degree in Software Engineering from PTIT.</p>
-											<span class="date">September 2019 to January 2024</span>
+											<h3>PTIT Graduation &rsquo;24</h3>
+											<p>B.Eng Software Engineering &mdash; Graduated with Distinction (Very Good) from PTIT Ho Chi Minh City.</p>
+											<span class="date">Sep 2019 &ndash; Jan 2024</span>
 										</div>
 									</div>
 
 									<div class="item">
-										<img src="assets/images/portfolio/blog-first-comp.jpg" alt="The first company" loading="lazy"/>
+										<img src="assets/images/portfolio/blog-first-comp.jpg" alt="UNIT Company Year-End Event 2022" loading="lazy"/>
 										<div class="isotope-overlay">
-											<p>The first company</p>
+											<p>UNIT Company &rsquo;22</p>
 										</div>
 										<div class="portfolio-description">
-											<h3>The first company</h3>
-											<p>YEP of FirstCompany.</p>
-											<span class="date">April 2022 to March 2023</span>
+											<h3>UNIT Company &rsquo;22</h3>
+											<p>Year-end celebration at UNIT where I built real-time payment modules for HSBC&rsquo;s ACH system, enabling same-day Samsung payroll.</p>
+											<span class="date">Jan 2022 &ndash; Apr 2023</span>
 										</div>
 									</div>
 								</div>
 		
 								<div class="col-sm-4">
 									<div class="item">
-										<img src="assets/images/portfolio/blog-tn-ha.jpg" alt="girlfriend's graduation" loading="lazy"/>
+										<img src="assets/images/portfolio/blog-tn-ha.jpg" alt="USSH Graduation 2023" loading="lazy"/>
 										<div class="isotope-overlay">
-											<p>girlfriend's graduation</p>
+											<p>USSH Graduation &apos;23</p>
 										</div>
 										<div class="portfolio-description">
-											<h3>girlfriend's graduation</h3>
-											<p>My girlfriend graduated with a very good degree from USSH.</p>
-											<span class="date">September 2019 to June 2023</span>
+											<h3>USSH Graduation &rsquo;23</h3>
+											<p>My partner graduated with Distinction from the University of Social Sciences &amp; Humanities, Ho Chi Minh City.</p>
+											<span class="date">Sep 2019 &ndash; Jun 2023</span>
 										</div>
 									</div>
 		
 									<div class="item">
-										<img src="assets/images/portfolio/blog-second-comp.jpg" alt="The second company" loading="lazy"/>
+										<img src="assets/images/portfolio/blog-second-comp.jpg" alt="Smartee Vina Team Building, Nha Trang" loading="lazy"/>
 										<div class="isotope-overlay">
-											<p>The second company</p>
+											<p>Smartee Vina Team</p>
 										</div>
 										<div class="portfolio-description">
-											<h3>The second company</h3>
-											<p>Memories of the second company's trip to Nha Trang province.</p>
-											<span class="date">March 2023 to now</span>
+											<h3>Smartee Vina Team Building</h3>
+											<p>Team building trip to Nha Trang with Smartee Vina &mdash; where I shipped 4 projects across fintech &amp; manufacturing (2023&ndash;2025).</p>
+											<span class="date">Mar 2023 &ndash; May 2025</span>
 										</div>
 									</div>
 								</div>
@@ -826,6 +1024,7 @@
 		<!--contact start -->
 		<section id="contact" class="contact">
 			<div class="section-heading text-center fade-in-section">
+				<div class="section-tag-label">get in touch</div>
 				<h2>contact me</h2>
 			</div>
 			<div class="container">
@@ -893,12 +1092,16 @@
 										</div>
 										<div class="single-contact-add-info">
 											<h3>email</h3>
-											<p>quangnien24@gmail.com</p>
+											<p><a href="mailto:quangnien24@gmail.com">quangnien24@gmail.com</a></p>
 										</div>
-										<!-- <div class="single-contact-add-info">
-											<h3>website</h3>
-											<p>www.brownsine.com</p>
-										</div> -->
+										<div class="single-contact-add-info">
+											<h3>linkedin</h3>
+											<p><a href="https://www.linkedin.com/in/ni%C3%AAn-nguy%E1%BB%85n-quang-12871124a/" target="_blank" rel="noopener noreferrer">View Profile &rarr;</a></p>
+										</div>
+										<div class="single-contact-add-info">
+											<h3>github</h3>
+											<p><a href="https://github.com/quangnien" target="_blank" rel="noopener noreferrer">github.com/quangnien &rarr;</a></p>
+										</div>
 									</div>
 								</div><!--/.contact-adress-->
 								<div class="hm-foot-icon">
@@ -943,7 +1146,7 @@
 		<footer id="footer-copyright" class="footer-copyright">
 			<div class="container">
 				<div class="hm-footer-copyright text-center">
-					<p>&copy; <span id="footer-year"></span> Thomas Nguyen &mdash; Java Software Engineer. Built with passion.</p>
+					<p>&copy; <span id="footer-year"></span> Thomas Nguyen &mdash; Java Software Engineer &bull; Ho Chi Minh City, Vietnam</p>
 				</div><!--/.text-center-->
 			</div><!--/.container-->
 
