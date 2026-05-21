@@ -1701,3 +1701,146 @@ input.form-control::placeholder, textarea.form-control::placeholder { color: var
     .roadmap-svg { display: none; }
     .rm-legend   { gap: 14px; }
 }
+
+/* ─── SIGNATURE QUOTE ───────────────────────── */
+.signature-quote-section {
+    position: relative;
+    padding: 72px 24px;
+    overflow: hidden;
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+/* Ambient glow orbs behind the quote */
+.signature-quote-section::before,
+.signature-quote-section::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(72px);
+}
+.signature-quote-section::before {
+    width: 420px; height: 280px;
+    background: rgba(182, 54, 255, 0.09);
+    top: -60px; left: -80px;
+}
+.signature-quote-section::after {
+    width: 360px; height: 240px;
+    background: rgba(0, 212, 160, 0.07);
+    bottom: -60px; right: -60px;
+}
+
+.signature-quote-inner {
+    position: relative;
+    max-width: 860px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Big decorative quote mark */
+.quote-mark-open,
+.quote-mark-close {
+    display: block;
+    font-size: 5rem;
+    line-height: 0.6;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--primary), var(--teal));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0.55;
+    user-select: none;
+}
+.quote-mark-open { margin-bottom: 8px; }
+.quote-mark-close {
+    margin-top: 2px;
+    transform: scaleX(-1) scaleY(-1);
+    display: inline-block;
+}
+
+/* The quote text itself */
+.signature-quote-text {
+    font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    color: var(--text);
+    position: relative;
+    display: inline-block;
+    padding: 4px 0 10px;
+}
+
+/* Gradient highlight on the core words */
+.signature-quote-text .q-highlight {
+    background: linear-gradient(135deg, var(--primary-2) 0%, var(--teal) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+}
+
+/* Animated shimmer line beneath the quote */
+.signature-quote-text::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary), var(--teal), transparent);
+    border-radius: 2px;
+    transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.signature-quote-section.quote-visible .signature-quote-text::after {
+    width: 100%;
+}
+
+/* Attribution */
+.signature-quote-attr {
+    margin-top: 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.signature-quote-attr::before,
+.signature-quote-attr::after {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: var(--border3);
+}
+
+/* Fade-in animation */
+.signature-quote-section .fade-quote {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.signature-quote-section.quote-visible .fade-quote {
+    opacity: 1;
+    transform: translateY(0);
+}
+.signature-quote-section.quote-visible .fade-quote:nth-child(2) { transition-delay: 0.15s; }
+.signature-quote-section.quote-visible .fade-quote:nth-child(3) { transition-delay: 0.3s; }
+
+/* Light mode adjustments */
+[data-theme="light"] .signature-quote-section {
+    background: var(--bg3);
+}
+[data-theme="light"] .signature-quote-section::before {
+    background: rgba(136, 0, 204, 0.07);
+}
+[data-theme="light"] .signature-quote-section::after {
+    background: rgba(11, 122, 90, 0.06);
+}

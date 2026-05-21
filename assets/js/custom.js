@@ -451,4 +451,18 @@ document.addEventListener('DOMContentLoaded', function () {
             el.style.transform = '';
         });
     });
+
+    // Signature quote: reveal on scroll into view
+    var quoteSection = document.getElementById('signature-quote');
+    if (quoteSection) {
+        var quoteObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('quote-visible');
+                    quoteObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+        quoteObserver.observe(quoteSection);
+    }
 });

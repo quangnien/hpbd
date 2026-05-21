@@ -9,7 +9,8 @@
       "Skill(claude-mem:make-plan)",
       "Bash(Get-ChildItem *)",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(Select-Object FullName, Length)"
     ]
   }
 }
