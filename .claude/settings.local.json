@@ -8,7 +8,8 @@
       "Bash(node -e ' *)",
       "Skill(claude-mem:make-plan)",
       "Bash(Get-ChildItem *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit *)"
     ]
   }
 }
