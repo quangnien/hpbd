@@ -10,7 +10,8 @@
       "Bash(Get-ChildItem *)",
       "Bash(git add *)",
       "Bash(git commit *)",
-      "Bash(Select-Object FullName, Length)"
+      "Bash(Select-Object FullName, Length)",
+      "PowerShell(New-Item *)"
     ]
   }
 }

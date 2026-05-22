@@ -1622,15 +1622,7 @@ class UserServiceTest {
             </ul>
         </div>
 
-        <!-- Post footer nav -->
-        <div class="post-footer">
-            <div class="post-nav-links">
-                <a href="../index.html" class="post-nav-link">
-                    <span class="post-nav-label">← Back</span>
-                    <span class="post-nav-title">All Posts</span>
-                </a>
-            </div>
-        </div>
+        <div class="post-footer"></div>
 
     </article>
 
@@ -1657,6 +1649,24 @@ class UserServiceTest {
     </aside>
 
 </div>
+
+<!-- Fixed bottom navigation -->
+<nav class="post-nav-fixed" aria-label="Post navigation">
+    <a href="../index.html" class="post-nav-fixed-btn">
+        <span class="pnf-icon">←</span>
+        <span class="pnf-text">
+            <span class="pnf-label">Back</span>
+            <span class="pnf-title">All Posts</span>
+        </span>
+    </a>
+    <a href="../postgresql-indexing/index.html" class="post-nav-fixed-btn" style="flex-direction:row-reverse;text-align:right">
+        <span class="pnf-icon">→</span>
+        <span class="pnf-text">
+            <span class="pnf-label">Next</span>
+            <span class="pnf-title">PostgreSQL Indexing</span>
+        </span>
+    </a>
+</nav>
 
 <!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
