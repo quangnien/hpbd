@@ -694,7 +694,7 @@
             <div class="tldr-item"><div class="tldr-dot"></div><span><strong>CAP Theorem:</strong> Trong hệ thống phân tán, bạn chỉ có thể chọn 2 trong 3: Consistency, Availability, Partition Tolerance.</span></div>
             <div class="tldr-item"><div class="tldr-dot"></div><span><strong>PACELC</strong> mở rộng CAP: khi không có partition, bạn vẫn phải chọn giữa Latency và Consistency.</span></div>
             <div class="tldr-item"><div class="tldr-dot"></div><span><strong>Tech Debt</strong> không phải xấu — nó là một trade-off có chủ đích giữa tốc độ ra mắt và chi phí bảo trì sau này.</span></div>
-            <div class="tldr-item"><div class="tldr-dot"></div><span>Sự khác biệt giữa Engineer và Architect không phải số công nghệ biết, mà là khả năng <em>nhận diện và quyết định trade-off có chủ đích</em>.</span></div>
+            <div class="tldr-item"><div class="tldr-dot"></div><span>Điểm khác biệt giữa Engineer và Architect không nằm ở số công nghệ biết, mà ở khả năng <em>nhìn thấy, phân tích, và quyết định trade-off một cách có chủ đích</em>.</span></div>
         </div>
     </div>
 
@@ -705,13 +705,13 @@
 
     <p class="reveal">Nhưng càng làm việc lâu, mình càng nhận ra rằng <strong>không có câu trả lời tuyệt đối trong software engineering</strong>. Không có database nào tốt nhất. Không có kiến trúc nào hoàn hảo. Không có công nghệ nào đúng cho mọi bài toán.</p>
 
-    <p class="reveal">Tại sao? Vì mọi hệ thống đều bị ràng buộc bởi các giới hạn vật lý và toán học không thể vượt qua: tốc độ ánh sáng, không gian đĩa, băng thông mạng, thời gian xử lý của CPU. Khi bạn tối ưu một chiều, bạn <em>bắt buộc phải</em> hy sinh một chiều khác. Đây không phải limitation của công nghệ — đây là <strong>quy luật của vũ trụ</strong>.</p>
+    <p class="reveal">Tại sao lại vậy? Vì mọi hệ thống đều bị giới hạn bởi những thứ không thể thay đổi được: tốc độ ánh sáng, dung lượng đĩa, băng thông mạng, chu kỳ xử lý của CPU. Khi bạn cải thiện một thứ, bạn gần như chắc chắn phải trả giá bằng một thứ khác. Đây không phải là lỗi của công nghệ — đây là cách vật lý hoạt động, và không có framework hay ngôn ngữ lập trình nào thoát ra khỏi được.</p>
 
-    <p class="reveal">Thứ thực sự tồn tại là <strong>trade-off</strong> — sự đánh đổi. Mọi quyết định kỹ thuật đều là một lựa chọn giữa hai (hay nhiều) thứ có giá trị. Bạn được cái này, thì mất cái kia. Câu hỏi không phải là "cái nào tốt hơn?" mà là "với <em>context này</em>, cái nào <em>đáng đánh đổi</em> hơn?"</p>
+    <p class="reveal">Thứ duy nhất thực sự tồn tại là <strong>trade-off</strong> — sự đánh đổi. Mọi quyết định kỹ thuật đều là một lựa chọn giữa hai (hay nhiều) thứ có giá trị. Bạn được cái này, thì mất cái kia. Câu hỏi không phải "cái nào tốt hơn?" mà là "với <em>context này</em>, cái nào <em>đáng đánh đổi</em> hơn?"</p>
 
     <div class="personal-note reveal">
         <strong>Tại sao mình viết bài này?</strong><br>
-        Đây không phải bài viết kỹ thuật thông thường. Nó là một reflection — tổng hợp những gì mình học được sau hơn 4 năm xây dựng hệ thống trong fintech và banking. Nếu bạn đang ở giai đoạn muốn tiến từ developer lên senior hoặc architect, tôi hy vọng cách nhìn này sẽ hữu ích. Bài viết phù hợp cho tất cả mọi người — từ fresher mới vào nghề đến senior đang nhìn lại con đường đã qua.
+        Mình viết bài này không phải để dạy kỹ thuật — mà để chia sẻ một cách nhìn mà mình đã mất hơn 4 năm làm việc trong fintech và banking mới dần hình thành được. Nếu bạn đang tự hỏi "architect nghĩ khác mình ở điểm nào?" hay đang trên con đường từ developer lên senior — bài này viết cho bạn. Từ fresher mới ra trường đến senior nhiều năm kinh nghiệm đều sẽ tìm được gì đó để suy ngẫm.
     </div>
 
     <hr>
@@ -795,7 +795,7 @@
         <p>Hệ thống phân tán (distributed system) là hệ thống chạy trên <strong>nhiều máy chủ (nodes) kết nối qua mạng</strong>. Ví dụ: một app có 3 máy chủ tại Hà Nội, TP.HCM, và Singapore để phục vụ người dùng nhanh hơn. Vấn đề: khi mạng gặp sự cố (<em>network partition</em>), 3 máy chủ này bị tách rời — và đây là lúc CAP Theorem phát huy tác dụng.</p>
     </div>
 
-    <p class="reveal">Không có trade-off nào trong distributed systems nổi tiếng hơn <strong>CAP Theorem</strong> — được chứng minh bởi Eric Brewer năm 2000 và trở thành kim chỉ nam thiết kế hệ thống phân tán. Định lý này nói rằng: <em>trong một hệ thống phân tán, bạn chỉ có thể đảm bảo đồng thời tối đa 2 trong 3 thuộc tính sau:</em></p>
+    <p class="reveal">Không có trade-off nào trong distributed systems được nhắc đến nhiều hơn <strong>CAP Theorem</strong> — được Eric Brewer phát biểu năm 2000 và sau đó được chứng minh toán học, trở thành nền tảng thiết kế hệ thống phân tán. Định lý này nói một điều rất đơn giản: <em>trong một hệ thống phân tán, bạn chỉ có thể đảm bảo được 2 trong 3 thứ sau — cùng một lúc:</em></p>
 
     <!-- CAP SVG Diagram -->
     <div class="cap-svg-outer reveal">
@@ -822,12 +822,15 @@
                   stroke-dasharray="238" stroke-dashoffset="238"/>
 
             <!-- Zone labels inside triangle -->
+            <!-- CA zone: left side (between C top and A bottom-left), away from P -->
             <text x="134" y="195" text-anchor="middle" fill="#b636ff" fill-opacity="0.35"
-                  font-size="11" font-family="JetBrains Mono,monospace" font-weight="700">CP</text>
-            <text x="246" y="195" text-anchor="middle" fill="#00d4a0" fill-opacity="0.35"
-                  font-size="11" font-family="JetBrains Mono,monospace" font-weight="700">AP</text>
-            <text x="190" y="254" text-anchor="middle" fill="#fbbf24" fill-opacity="0.35"
                   font-size="11" font-family="JetBrains Mono,monospace" font-weight="700">CA</text>
+            <!-- CP zone: right side (between C top and P bottom-right), away from A -->
+            <text x="246" y="195" text-anchor="middle" fill="#00d4a0" fill-opacity="0.35"
+                  font-size="11" font-family="JetBrains Mono,monospace" font-weight="700">CP</text>
+            <!-- AP zone: bottom (between A and P), away from C -->
+            <text x="190" y="254" text-anchor="middle" fill="#fbbf24" fill-opacity="0.35"
+                  font-size="11" font-family="JetBrains Mono,monospace" font-weight="700">AP</text>
             <text x="190" y="178" text-anchor="middle" fill="rgba(255,255,255,0.15)"
                   font-size="9" font-family="JetBrains Mono,monospace">pick any 2</text>
 
@@ -897,9 +900,9 @@
     <!-- 3.2 PACELC -->
     <h3 id="s3-2">3.2 PACELC — Mở rộng của CAP cho thực tế</h3>
 
-    <p class="reveal">CAP Theorem có một hạn chế: nó chỉ nói về trade-off <em>khi có network partition</em>. Nhưng trong thực tế, mạng hoạt động bình thường hầu hết thời gian — và khi đó, vẫn còn một trade-off khác: <strong>Latency vs Consistency</strong>.</p>
+    <p class="reveal">CAP Theorem có một điểm hơi "thiếu": nó chỉ mô tả điều xảy ra <em>khi có network partition</em>. Nhưng thực tế thì mạng chạy bình thường 99% thời gian — và ngay cả lúc đó, bạn vẫn phải chọn giữa hai thứ: phản hồi <strong>nhanh hơn</strong> hay dữ liệu <strong>chính xác hơn</strong>?</p>
 
-    <p class="reveal"><strong>PACELC</strong> (Daniel Abadi, 2012) bổ sung điều này: nếu có <strong>P</strong>artition → chọn <strong>A</strong>vailability hay <strong>C</strong>onsistency; <strong>E</strong>lse (bình thường) → chọn <strong>L</strong>atency thấp hay <strong>C</strong>onsistency cao.</p>
+    <p class="reveal"><strong>PACELC</strong> (Daniel Abadi, 2012) lấp đúng khoảng trống này: nếu có <strong>P</strong>artition → chọn <strong>A</strong>vailability hay <strong>C</strong>onsistency (giống CAP); <strong>E</strong>lse khi bình thường → chọn <strong>L</strong>atency thấp hay <strong>C</strong>onsistency cao. Đây mới là model thực tế hơn cho việc chọn database.</p>
 
     <div class="pacelc-wrapper reveal">
         <div class="pacelc-label">PACELC Decision Tree</div>
@@ -1120,7 +1123,7 @@
     <!-- 4.3 Sync vs Async -->
     <h3 id="s4-3">4.3 Synchronous vs. Asynchronous Communication</h3>
 
-    <p class="reveal">Trong microservices (và ngay cả trong monolith hiện đại), hai thành phần cần giao tiếp với nhau. Đây là trade-off quan trọng giữa <strong>REST/HTTP (sync)</strong> và <strong>Message Queue (async)</strong>:</p>
+    <p class="reveal">Khi các service cần nói chuyện với nhau — dù trong microservices hay monolith hiện đại — bạn đứng trước một lựa chọn quen thuộc: gọi thẳng rồi chờ, hay gửi message rồi đi làm việc khác? Đây là trade-off giữa <strong>REST/HTTP (sync)</strong> và <strong>Message Queue (async)</strong>:</p>
 
     <div class="comm-compare reveal">
         <!-- Sync card -->
@@ -1231,7 +1234,7 @@
     <!-- ═══ SECTION 5 — Tech Debt ═══ -->
     <h2 id="s5">Tech Debt — Khoản nợ kỹ thuật có chủ đích</h2>
 
-    <p class="reveal">Tech Debt (nợ kỹ thuật) thường bị hiểu sai là "code xấu". Thực ra, khái niệm này được <strong>Ward Cunningham</strong> đặt ra năm 1992 như một <em>metaphor tài chính</em>: đôi khi bạn chủ động "vay" speed-to-market bằng cách tạo ra technical debt — và giống như vay tiền, bạn phải trả lãi (maintenance overhead) sau này.</p>
+    <p class="reveal">Tech Debt là một trong những khái niệm bị hiểu sai nhiều nhất trong ngành. Nhiều người nghĩ tech debt = code xấu = thứ cần xấu hổ và tránh xa. Nhưng <strong>Ward Cunningham</strong> — người đặt ra thuật ngữ này năm 1992 — lại dùng nó như một <em>ẩn dụ tài chính rất có chủ đích</em>: đôi khi bạn "vay" tốc độ phát triển hôm nay bằng cách tạm chấp nhận một solution chưa hoàn hảo — và như mọi khoản vay, bạn sẽ phải trả lãi dưới dạng maintenance overhead về sau. Vay tiền không xấu. Vay mà không biết mình đang vay mới là vấn đề.</p>
 
     <div class="td-intro reveal">
         <div class="td-intro-icon">🏦</div>
@@ -1284,7 +1287,7 @@
     <!-- ═══ SECTION 6 — Mindset ═══ -->
     <h2 id="s6">Tư Duy Kỹ Sư vs Tư Duy Architect</h2>
 
-    <p class="reveal">Điều phân biệt một senior engineer với một architect không phải là số năm kinh nghiệm hay số công nghệ biết — mà là <strong>cách nhìn nhận vấn đề</strong>. Và sự khác biệt này hoàn toàn có thể học được.</p>
+    <p class="reveal">Mình từng nghĩ architect là người "biết nhiều công nghệ hơn" hoặc "nhiều năm kinh nghiệm hơn". Sai. Điều thực sự phân biệt hai mindset này là <strong>cách nhìn nhận vấn đề</strong> — không phải kiến thức kỹ thuật. Và điều đó hoàn toàn có thể luyện tập được, ngay từ bây giờ.</p>
 
     <div class="mindset-compare reveal">
         <div class="mindset-box engineer">
@@ -1324,7 +1327,7 @@
     <!-- ═══ SECTION 7 — Decision Framework ═══ -->
     <h2 id="s7">Framework Ra Quyết Định Kiến Trúc</h2>
 
-    <p class="reveal">Sau nhiều năm làm việc với hệ thống fintech, mình hình thành một framework để tư duy về trade-off khi đưa ra quyết định kiến trúc. Không có gì fancy — chỉ là 5 câu hỏi đúng theo đúng thứ tự:</p>
+    <p class="reveal">Sau nhiều năm làm việc với hệ thống fintech — và sau không ít lần ra quyết định kiến trúc rồi phải quay lại sửa — mình hình thành thói quen hỏi 5 câu này trước bất kỳ quyết định lớn nào. Không có gì phức tạp cả. Nhưng hỏi đúng thứ tự, câu sau sẽ bắt đầu từ đúng chỗ câu trước kết thúc:</p>
 
     <div class="decision-matrix reveal">
         <div class="dm-title">5-Step Trade-off Decision Framework</div>
@@ -1412,11 +1415,11 @@
     <!-- ═══ SECTION 8 — Conclusion ═══ -->
     <h2 id="s8">Kết Luận — Embrace the Trade-Off</h2>
 
-    <p class="reveal">Câu nói "Everything's A Trade-Off" không phải là lý do để không quyết định — mà ngược lại. Nó là lời nhắc nhở để <strong>quyết định có chủ đích</strong>.</p>
+    <p class="reveal">"Everything's A Trade-Off" không phải câu nói của người ngại quyết định — mà ngược lại. Đây là cách nhìn của người <strong>quyết định có chủ đích</strong>: biết rõ mình đang đánh đổi gì, chấp nhận nó một cách tỉnh táo, và ghi lại để sau này còn nhớ tại sao.</p>
 
-    <p class="reveal">Khi bạn hiểu rằng mọi lựa chọn đều có chi phí, bạn sẽ ngừng tìm kiếm giải pháp hoàn hảo và bắt đầu tìm kiếm <strong>giải pháp phù hợp nhất với context hiện tại</strong>. Bạn sẽ biết rõ mình đang chấp nhận đánh đổi gì, và tại sao nó xứng đáng. Và quan trọng hơn — bạn sẽ biết <em>ghi lại quyết định đó</em> để team sau hiểu.</p>
+    <p class="reveal">Khi bạn thực sự hiểu rằng mọi lựa chọn đều có chi phí, bạn sẽ ngừng cắm đầu đi tìm "giải pháp hoàn hảo" — vì nó không tồn tại. Thay vào đó bạn sẽ hỏi: <em>"Với team này, product này, timeline này — trade-off nào là hợp lý nhất?"</em> Đó là câu hỏi của architect.</p>
 
-    <p class="reveal">Đây là cách tư duy của một System Architect — không phải "best practice" tuyệt đối, mà là khả năng phân tích, so sánh, và lựa chọn một cách tỉnh táo trong bối cảnh cụ thể. <strong>3 điều bạn có thể làm ngay tuần này:</strong></p>
+    <p class="reveal"><strong>3 điều bạn có thể bắt đầu ngay tuần này, không cần chờ thêm:</strong></p>
 
     <div class="conclusion-actions reveal">
         <div class="conclusion-action">
@@ -1443,7 +1446,7 @@
     </div>
 
     <blockquote class="reveal">
-        Tôi đang trên con đường học cách đưa ra những quyết định đó — và ghi lại hành trình qua từng bài viết trong blog này. Nếu bạn muốn thảo luận về một trade-off cụ thể bạn đang đối mặt, đừng ngại liên hệ.
+        Mình vẫn đang trên con đường đó — học cách đưa ra những quyết định tốt hơn mỗi ngày. Mỗi bài viết trong blog này là một cột mốc nhỏ. Nếu bạn đang đối mặt với một trade-off cụ thể nào và muốn nghe thêm góc nhìn, cứ liên hệ mình nhé.
     </blockquote>
 
     <h3>Những bài viết liên quan</h3>
