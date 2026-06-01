@@ -1,0 +1,24 @@
+{
+  "name": "hpbd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "remove_china.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quangnien/hpbd.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/quangnien/hpbd/issues"
+  },
+  "homepage": "https://github.com/quangnien/hpbd#readme",
+  "devDependencies": {
+    "playwright": "^1.60.0"
+  }
+}
