@@ -286,11 +286,65 @@
     }
 
     .poem-foot {
-      font-size: 1rem; color: var(--sub);
+      position: relative;
+      text-align: center;
+      background: rgba(232,115,138,0.055);
+      border: 1px solid rgba(232,115,138,0.2);
+      border-radius: 22px;
+      padding: 2.2rem 2.8rem 2.2rem;
+      max-width: 620px;
+      margin: 0 auto;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       opacity: 0; transform: translateY(12px);
       transition: opacity 0.85s ease 0.55s, transform 0.85s ease 0.55s;
     }
-    .poem-foot.show { opacity: 1; transform: none; }
+    /* ✦ badge sitting on the top border */
+    .poem-foot::before {
+      content: '✦';
+      position: absolute;
+      top: -0.62rem; left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.78rem;
+      color: var(--rose);
+      background: var(--bg);
+      padding: 0 0.7rem;
+      letter-spacing: 0.12em;
+    }
+    .poem-foot.show {
+      opacity: 1; transform: none;
+      animation: poemFootGlow 5s ease-in-out infinite;
+    }
+    @keyframes poemFootGlow {
+      0%,100% { box-shadow: 0 0 40px rgba(232,115,138,0.08), inset 0 1px 0 rgba(255,255,255,0.04); }
+      50%      { box-shadow: 0 0 75px rgba(232,115,138,0.18), inset 0 1px 0 rgba(255,255,255,0.07); }
+    }
+
+    /* intro line — quiet, sets context */
+    .poem-foot-intro {
+      display: block;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(0.88rem, 1.9vw, 1.05rem);
+      color: var(--sub);
+      letter-spacing: 0.01em;
+      margin-bottom: 0.85rem;
+    }
+
+    /* key phrase — gradient, bold, large */
+    .poem-foot-em {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: clamp(1.15rem, 2.7vw, 1.58rem);
+      line-height: 1.52;
+      background: linear-gradient(135deg, #fde8ef 0%, var(--rose) 48%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
     /* ─────────────────────────────────────────
        SECTION: GALLERY (BENTO)
@@ -665,6 +719,160 @@
     }
 
     /* ─────────────────────────────────────────
+       MUSIC INDICATOR
+    ───────────────────────────────────────── */
+    #music-indicator {
+      position: fixed;
+      bottom: 1.8rem; right: 1.8rem;
+      z-index: 99999;
+      display: flex; align-items: center; gap: 0.65rem;
+      background: rgba(12,5,16,0.92);
+      border: 1px solid rgba(232,115,138,0.32);
+      border-radius: 100px;
+      padding: 0.5rem 1.2rem 0.5rem 0.5rem;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 4px 28px rgba(232,115,138,0.2);
+      opacity: 0; transform: translateY(16px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+      pointer-events: none;
+    }
+    #music-indicator.show { opacity: 1; transform: none; }
+
+    .music-disc {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, #c04566, #e8738a, #f0c060, #f7afc0, #c04566);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      animation: discSpin 2.2s linear infinite;
+    }
+    .music-disc::after {
+      content: '';
+      width: 11px; height: 11px;
+      background: #0c0510;
+      border-radius: 50%;
+    }
+    @keyframes discSpin { to { transform: rotate(360deg); } }
+
+    .music-label {
+      font-size: 0.72rem;
+      color: var(--rose-light);
+      letter-spacing: 0.04em;
+      line-height: 1.4;
+      white-space: nowrap;
+    }
+    .music-label small {
+      display: block;
+      font-size: 0.58rem;
+      color: var(--muted);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    /* ─────────────────────────────────────────
+       FINALE MESSAGE
+    ───────────────────────────────────────── */
+    #finale-msg {
+      position: fixed; inset: 0;
+      z-index: 99999;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(12,5,16,0);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 1.6s ease, background 1.6s ease;
+    }
+    #finale-msg.show {
+      opacity: 1;
+      background: rgba(12,5,16,0.8);
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    .finale-inner {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      transform: scale(0.82);
+      opacity: 0;
+      transition: transform 1.5s cubic-bezier(0.16,1,0.3,1) 0.7s, opacity 1.3s ease 0.7s;
+    }
+    #finale-msg.show .finale-inner { transform: scale(1); opacity: 1; }
+
+    .finale-heart {
+      font-size: 5.5rem; display: block; margin-bottom: 0.7rem;
+      animation: heartPulse 1.6s ease-in-out infinite;
+      filter: drop-shadow(0 0 30px rgba(232,115,138,0.7));
+    }
+    .finale-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 900;
+      background: linear-gradient(140deg, #fde8ef 0%, var(--rose) 48%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.08;
+      margin-bottom: 0.5rem;
+    }
+    .finale-name {
+      display: block;
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(1.8rem, 4.5vw, 3.5rem);
+      color: var(--rose-light);
+      text-shadow: 0 0 50px rgba(247,175,192,0.5);
+      margin-bottom: 0.6rem;
+    }
+    .finale-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-top: 1.8rem;
+    }
+
+    /* ─────────────────────────────────────────
+       CELEBRATING AMBIENT GLOW
+    ───────────────────────────────────────── */
+    #celeb-glow {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 3;
+      background:
+        radial-gradient(ellipse 75% 55% at 50% 50%, rgba(232,115,138,0.14) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 35% at 20% 80%, rgba(240,192,96,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 35% at 80% 20%, rgba(192,69,102,0.08) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 1.4s ease;
+    }
+    #celeb-glow.active {
+      opacity: 1;
+      animation: celebGlow 4.5s ease-in-out infinite;
+    }
+    @keyframes celebGlow {
+      0%,100% { opacity: 0.55; }
+      50%      { opacity: 1; }
+    }
+
+    /* ─────────────────────────────────────────
+       FLOATING LOVE WORDS
+    ───────────────────────────────────────── */
+    .love-word {
+      position: fixed;
+      pointer-events: none;
+      z-index: 99995;
+      font-family: 'Dancing Script', cursive;
+      color: var(--rose-light);
+      text-shadow: 0 0 22px rgba(232,115,138,0.55);
+      opacity: 0;
+      animation: loveWordRise linear forwards;
+      white-space: nowrap;
+    }
+    @keyframes loveWordRise {
+      0%   { opacity: 0;    transform: translateY(0)     scale(0.8);  }
+      12%  { opacity: 0.88; transform: translateY(-30px) scale(1.02); }
+      75%  { opacity: 0.7; }
+      100% { opacity: 0;    transform: translateY(-170px) scale(0.92); }
+    }
+
+    /* ─────────────────────────────────────────
        RESPONSIVE
     ───────────────────────────────────────── */
 
@@ -738,7 +946,9 @@
       #poem            { padding: 5rem 1.4rem 4rem; }
       .poem-line       { font-size: clamp(1.1rem, 5vw, 1.5rem); }
       .poem-line.en    { font-size: clamp(0.95rem, 4vw, 1.25rem); }
-      .poem-foot       { font-size: 0.9rem; }
+      .poem-foot        { padding: 1.6rem 1.5rem 1.6rem; }
+      .poem-foot-intro  { font-size: 0.82rem; }
+      .poem-foot-em     { font-size: clamp(1rem, 4.5vw, 1.25rem); }
 
       /* gallery */
       #gallery         { padding: 3rem 0.7rem 5rem; }
@@ -812,6 +1022,9 @@
   <!-- Ambient mesh -->
   <div class="mesh-bg"></div>
 
+  <!-- Celebration ambient glow (activated by JS) -->
+  <div id="celeb-glow"></div>
+
   <!-- Rose petal canvas -->
   <canvas id="petal-canvas"></canvas>
 
@@ -852,8 +1065,8 @@
     <p class="poem-line en">you make everything feel like a love story.</p>
     <div class="poem-rule"></div>
     <p class="poem-foot">
-      Hôm nay là ngày của em — và anh muốn em biết rằng,
-      mỗi ngày có em là một món quà anh trân trọng hơn bất cứ điều gì.
+      <span class="poem-foot-intro">Hôm nay là ngày của em — và anh muốn em biết rằng,</span>
+      <span class="poem-foot-em">mỗi ngày có em là một món quà anh trân trọng hơn bất cứ điều gì.</span>
     </p>
   </section>
 
@@ -972,6 +1185,24 @@
     Made with &nbsp;💖&nbsp; by Thomas &nbsp;·&nbsp; For Khánh Hà &nbsp;·&nbsp; 2026
   </footer>
 
+  <!-- Music Indicator -->
+  <div id="music-indicator">
+    <div class="music-disc"></div>
+    <div class="music-label">
+      Happy Birthday, Khánh Hà
+      <small>♪ đang phát</small>
+    </div>
+  </div>
+
+  <!-- Finale Message -->
+  <div id="finale-msg" onclick="this.classList.remove('show')">
+    <div class="finale-inner">
+      <span class="finale-heart">💖</span>
+      <h2 class="finale-title">Mãi yêu em</h2>
+      <span class="finale-name">Khánh Hà ❤</span>
+      <p class="finale-sub">nhấn để đóng</p>
+    </div>
+  </div>
 
   <script>
   /* ════════════════════════════
@@ -1164,62 +1395,183 @@
   }
 
   /* ════════════════════════════
-     SURPRISE FIREWORKS
+     SURPRISE — MUSIC + SUSTAINED EFFECTS
   ════════════════════════════ */
+  let surpriseActive  = false;
+  let burstRate       = 120;
+  let loveWordTimer   = null;
+
+  const birthdayMusic = new Audio('../assets/mp3/Happy_Birthday_To_You.mp3');
+
+  const LOVE_WORDS = [
+    'yêu em 💕', 'Khánh Hà 🌸', 'mãi mãi ❤', 'sinh nhật vui 🎂',
+    'bé iu 🥰', 'forever ✨', 'anh yêu em', 'happy birthday 🎈',
+    'forever & always 💖', 'em là tất cả 🌷',
+  ];
+
+  function spawnLoveWord() {
+    if (!surpriseActive) return;
+    const t = birthdayMusic.currentTime;
+    const d = birthdayMusic.duration || 80;
+    if (t < 12 || t > d - 18) return; /* only in the gentle middle phase */
+
+    const el = document.createElement('div');
+    el.className = 'love-word';
+    el.textContent = LOVE_WORDS[Math.floor(Math.random() * LOVE_WORDS.length)];
+    const dur = (Math.random() * 2 + 4).toFixed(2) + 's';
+    Object.assign(el.style, {
+      left:              (Math.random() * 68 + 12) + '%',
+      bottom:            (Math.random() * 28 + 8) + '%',
+      fontSize:          (Math.random() * 1.3 + 1.05) + 'rem',
+      animationDuration: dur,
+    });
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), parseFloat(dur) * 1000 + 200);
+  }
+
   function launchSurprise() {
-    document.getElementById('btn-sur').textContent = '🎉 Happy Birthday, Khánh Hà! 🎂';
-    const dur = 5000, end = Date.now() + dur;
+    if (surpriseActive) return;
+    surpriseActive = true;
+
+    const btn = document.getElementById('btn-sur');
+    btn.innerHTML      = '🎉 &nbsp; Happy Birthday, Khánh Hà! 🎂';
+    btn.style.pointerEvents = 'none';
+    btn.style.opacity  = '0.65';
+
+    /* play music; fallback to fixed duration if browser blocks autoplay */
+    let musicStarted = false;
+    birthdayMusic.currentTime = 0;
+    birthdayMusic.addEventListener('playing', () => { musicStarted = true; }, { once: true });
+    birthdayMusic.play().catch(() => {
+      setTimeout(grandFinale, 150000); /* 2.5 min fallback */
+    });
+
+    /* adjust burst rate by where we are in the song */
+    birthdayMusic.addEventListener('timeupdate', () => {
+      const t = birthdayMusic.currentTime;
+      const d = birthdayMusic.duration || 180;
+      if (t < 12)        burstRate = 120;  /* opening  – full blast   */
+      else if (t > d-18) burstRate = 100;  /* closing  – building up  */
+      else               burstRate = 260;  /* sustained – gentle rain */
+    });
+
+    /* show spinning disc indicator */
+    setTimeout(() => document.getElementById('music-indicator').classList.add('show'), 500);
+
+    /* ambient glow — breathes for the whole song */
+    setTimeout(() => document.getElementById('celeb-glow').classList.add('active'), 300);
+
+    /* love words drift up during the gentle sustained middle phase */
+    loveWordTimer = setInterval(spawnLoveWord, 3200);
+
+    /* extra petals for the occasion */
+    for (let i = 0; i < 18; i++) petals.push(new Petal(Math.random() > 0.5));
+
+    /* ── continuous burst loop ── */
+    const COLS   = ['#e8738a','#f0c060','#fde8ef','#c04566','#f7afc0','#ffffff','#f4a0b4'];
+    const EMOJIS = ['🎉','🌸','💖','✨','🎂','💕','🌷','🥳','🎈','🌟'];
 
     function burst() {
-      /* confetti dots */
-      for (let i = 0; i < 10; i++) {
-        const dot  = document.createElement('div');
-        const cols = ['#e8738a','#f0c060','#fde8ef','#c04566','#f7afc0','#ffffff','#f4a0b4'];
-        const tx   = (Math.random() - 0.5) * 200 + 'px';
-        const ty   = -(Math.random() * 160 + 60) + 'px';
-        const tr   = (Math.random() * 360) + 'deg';
-        const x    = Math.random() * window.innerWidth;
-        const y    = Math.random() * window.innerHeight * 0.8;
+      if (!surpriseActive) return;
+
+      const count = burstRate < 150 ? 10 : 6; /* fewer dots in calm phase */
+      for (let i = 0; i < count; i++) {
+        const dot = document.createElement('div');
         Object.assign(dot.style, {
-          position:    'fixed',
-          left:        x + 'px',
-          top:         y + 'px',
-          width:       (Math.random() * 7 + 5) + 'px',
-          height:      (Math.random() * 7 + 5) + 'px',
+          position:     'fixed',
+          left:         Math.random() * window.innerWidth + 'px',
+          top:          Math.random() * window.innerHeight * 0.8 + 'px',
+          width:        (Math.random() * 7 + 5) + 'px',
+          height:       (Math.random() * 7 + 5) + 'px',
           borderRadius: Math.random() > 0.5 ? '50%' : '2px',
-          background:  cols[Math.floor(Math.random() * cols.length)],
+          background:   COLS[Math.floor(Math.random() * COLS.length)],
           pointerEvents: 'none',
-          zIndex:      '99997',
-          animation:   'cPop 1s ease forwards',
+          zIndex:       '99997',
+          animation:    'cPop 1s ease forwards',
         });
-        dot.style.setProperty('--tx', tx);
-        dot.style.setProperty('--ty', ty);
-        dot.style.setProperty('--tr', tr);
+        dot.style.setProperty('--tx', (Math.random() - 0.5) * 200 + 'px');
+        dot.style.setProperty('--ty', -(Math.random() * 160 + 60) + 'px');
+        dot.style.setProperty('--tr', (Math.random() * 360) + 'deg');
         document.body.appendChild(dot);
         setTimeout(() => dot.remove(), 1050);
       }
 
-      /* emoji bursts */
-      const EMOJIS = ['🎉','🌸','💖','✨','🎂','💕','🌷','🥳','🎈','🌟'];
-      if (Math.random() > 0.55) {
+      /* emoji – more frequent in intense phases */
+      if (Math.random() > (burstRate < 150 ? 0.55 : 0.32)) {
         const em = document.createElement('div');
         Object.assign(em.style, {
-          position:    'fixed',
-          left:        Math.random() * window.innerWidth + 'px',
-          top:         Math.random() * window.innerHeight * 0.75 + 'px',
-          fontSize:    (Math.random() * 2.2 + 1.5) + 'rem',
+          position:     'fixed',
+          left:         Math.random() * window.innerWidth + 'px',
+          top:          Math.random() * window.innerHeight * 0.75 + 'px',
+          fontSize:     (Math.random() * 2.2 + 1.5) + 'rem',
           pointerEvents: 'none',
-          zIndex:      99998,
-          animation:   'ePop 1.6s ease forwards',
+          zIndex:       '99998',
+          animation:    'ePop 1.6s ease forwards',
         });
         em.textContent = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
         document.body.appendChild(em);
         setTimeout(() => em.remove(), 1700);
       }
 
-      if (Date.now() < end) setTimeout(burst, 120);
+      setTimeout(burst, burstRate);
     }
     burst();
+
+    birthdayMusic.addEventListener('ended', grandFinale, { once: true });
+  }
+
+  function grandFinale() {
+    surpriseActive = false;
+    clearInterval(loveWordTimer);
+    document.getElementById('music-indicator').classList.remove('show');
+    document.getElementById('celeb-glow').classList.remove('active');
+
+    /* intense burst for 3 seconds */
+    const COLS   = ['#e8738a','#f0c060','#fde8ef','#c04566','#f7afc0','#ffffff','#f4a0b4'];
+    const EMOJIS = ['🎉','💖','✨','🌟','💕','🌸','🎈','🥳','🌷'];
+    const endTs  = Date.now() + 3000;
+
+    function finalBurst() {
+      for (let i = 0; i < 20; i++) {
+        const dot = document.createElement('div');
+        Object.assign(dot.style, {
+          position:     'fixed',
+          left:         Math.random() * window.innerWidth + 'px',
+          top:          Math.random() * window.innerHeight * 0.9 + 'px',
+          width:        (Math.random() * 10 + 5) + 'px',
+          height:       (Math.random() * 10 + 5) + 'px',
+          borderRadius: Math.random() > 0.4 ? '50%' : '2px',
+          background:   COLS[Math.floor(Math.random() * COLS.length)],
+          pointerEvents: 'none',
+          zIndex:       '99997',
+          animation:    'cPop 1.2s ease forwards',
+        });
+        dot.style.setProperty('--tx', (Math.random() - 0.5) * 280 + 'px');
+        dot.style.setProperty('--ty', -(Math.random() * 220 + 80) + 'px');
+        dot.style.setProperty('--tr', (Math.random() * 720) + 'deg');
+        document.body.appendChild(dot);
+        setTimeout(() => dot.remove(), 1300);
+      }
+      const em = document.createElement('div');
+      Object.assign(em.style, {
+        position:     'fixed',
+        left:         Math.random() * window.innerWidth + 'px',
+        top:          Math.random() * window.innerHeight * 0.8 + 'px',
+        fontSize:     (Math.random() * 3 + 2) + 'rem',
+        pointerEvents: 'none',
+        zIndex:       '99998',
+        animation:    'ePop 1.8s ease forwards',
+      });
+      em.textContent = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+      document.body.appendChild(em);
+      setTimeout(() => em.remove(), 1900);
+
+      if (Date.now() < endTs) setTimeout(finalBurst, 85);
+    }
+    finalBurst();
+
+    /* fade in love message after burst peak */
+    setTimeout(() => document.getElementById('finale-msg').classList.add('show'), 1500);
   }
   </script>
 
