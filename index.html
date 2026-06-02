@@ -1343,14 +1343,14 @@
   <div class="float-hearts" id="float-hearts"></div>
 
   <!-- scroll whisper hint -->
-  <div id="scroll-whisper" role="note" aria-label="Gợi ý cuộn trang">
+  <div id="scroll-whisper" role="note" aria-label="Scroll hint">
     <div class="sw-inner">
       <div class="sw-petals" aria-hidden="true">
         <span>🌸</span><span>💖</span><span>✨</span>
       </div>
       <p class="sw-text">
-        còn điều bất ngờ
-        <em>ở phía dưới ✦</em>
+        there's a surprise
+        <em>waiting below ✦</em>
       </p>
       <div class="sw-arrow" aria-hidden="true">
         <span></span><span></span>
@@ -1469,9 +1469,9 @@
           "Even an ordinary day<br/>can feel <em>special</em>"
         </h2>
         <p class="feature-desc">
-          Mọi khoảnh khắc bên em — dù bình thường đến đâu — đều thành ký ức anh muốn giữ lại.
-          Sinh nhật của em không chỉ là một ngày, đó là dịp để anh nói những điều đôi khi quên nói:
-          anh thấy em, anh biết ơn em, và anh rất vui vì em ở đây.
+          Every moment beside you — no matter how ordinary — becomes a memory I never want to let go.
+          Your birthday isn't just one day; it's a chance for me to say the things I sometimes forget to:
+          I see you, I'm grateful for you, and I'm so glad you're here.
           <br /><br />
           Every single day with you is a story worth telling. Happy birthday, my love.
         </p>
@@ -1498,11 +1498,11 @@
       <span class="closing-name">Bé iu Khánh Hà</span>
     </h2>
     <p class="closing-p" id="close-p">
-      Cảm ơn em vì đã là em — vì đã ở đây, vì đã đồng hành trong một năm qua với biết bao điều xảy ra.
+      Thank you for being you — for being here, for walking through this past year together, through everything.
       Here's to a new chapter, and all the good things ahead — together.
     </p>
     <button class="btn-surprise" id="btn-sur" onclick="launchSurprise()">
-      🎉 &nbsp; Bấm để nhận surprise!
+      🎉 &nbsp; Click for your surprise!
     </button>
   </section>
 
@@ -1517,12 +1517,12 @@
       <span class="finale-heart">💖</span>
       <h2 class="finale-title">Mãi yêu em</h2>
       <span class="finale-name">Khánh Hà ❤</span>
-      <p class="finale-sub">nhấn để đóng</p>
+      <p class="finale-sub">tap to close</p>
     </div>
   </div>
 
   <!-- music playing indicator -->
-  <div id="music-indicator" role="status" aria-label="Đang phát nhạc" aria-live="polite">
+  <div id="music-indicator" role="status" aria-label="Now playing music" aria-live="polite">
     <div class="mi-notes" aria-hidden="true">
       <span>♪</span><span>♫</span><span>♪</span>
     </div>
@@ -1530,7 +1530,7 @@
       <span></span><span></span><span></span><span></span><span></span>
     </div>
     <div class="mi-disc" aria-hidden="true"></div>
-    <button class="mi-stop" onclick="stopMusic()" title="Dừng nhạc" aria-label="Dừng nhạc">✕</button>
+    <button class="mi-stop" onclick="stopMusic()" title="Stop music" aria-label="Stop music">✕</button>
   </div>
 
   <!-- wow surprise overlay -->
@@ -1704,7 +1704,7 @@
   /* ════════════════════════════
      TYPEWRITER LOVE LETTER
   ════════════════════════════ */
-  const LETTER = `Khánh Hà,\n\nAs I've said before — "Even an ordinary day can feel special."\nAnd I mean it. Every ordinary moment with you somehow turns into a memory worth keeping.\n\nBut today is a special one.\n\nYour birthday isn't just a birthday to me. It's the one day a year I get to say all the things that don't always make it into conversation — that I love you, that I see you, and that I'm genuinely glad you're here.\n\nThis past year brought a lot — for both of us. More than either of us planned for. But through all of it, you were there. You showed up, you stayed, and you gave more than you had to. Anh không bao giờ quên điều đó.\n\nI hope this new year brings you the things you deserve: more happiness, more laughter, and more time — time for yourself, and time for us.\n\nCuộc sống không phải lúc nào cũng diễn ra như mình muốn. But I hope you face whatever comes with a calm heart — and remember that you don't have to face it alone.\n\nHere's to a new chapter. New things, new growth — let's figure it out together.\n\nThis present isn't valuable in itself — but it's a keepsake of this moment. It carries almost all of my warmest feelings.\n\nHappy birthday to you.\nLove you. Always.`;
+  const LETTER = `Khánh Hà,\n\nAs I've said before — "Even an ordinary day can feel special."\nAnd I mean it. Every ordinary moment with you somehow turns into a memory worth keeping.\n\nBut today is a special one.\n\nYour birthday isn't just a birthday to me. It's the one day a year I get to say all the things that don't always make it into conversation — that I love you, that I see you, and that I'm genuinely glad you're here.\n\nThis past year brought a lot — for both of us. More than either of us planned for. But through all of it, you were there. You showed up, you stayed, and you gave more than you had to. I will never forget that.\n\nI hope this new year brings you the things you deserve: more happiness, more laughter, and more time — time for yourself, and time for us.\n\nLife doesn't always go the way we want it to. But I hope you face whatever comes with a calm heart — and remember that you don't have to face it alone.\n\nHere's to a new chapter. New things, new growth — let's figure it out together.\n\nThis present isn't valuable in itself — but it's a keepsake of this moment. It carries almost all of my warmest feelings.\n\nHappy birthday to you.\nLove you. Always.`;
 
   const letterBody = document.getElementById('letter-body');
   let ltIdx = 0, ltStarted = false;
@@ -1896,7 +1896,7 @@
     birthdayMusic.pause();
     musicInd.classList.remove('visible');
     document.getElementById('celeb-glow').classList.remove('active');
-    btnSur.innerHTML = '🎉 &nbsp; Bấm để nhận surprise!';
+    btnSur.innerHTML = '🎉 &nbsp; Click for your surprise!';
     btnSur.style.pointerEvents = '';
     btnSur.style.opacity = '';
   }
