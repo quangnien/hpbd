@@ -288,14 +288,12 @@
     .poem-foot {
       position: relative;
       text-align: center;
-      background: rgba(232,115,138,0.055);
+      background: rgba(232,115,138,0.10);
       border: 1px solid rgba(232,115,138,0.2);
       border-radius: 22px;
       padding: 2.2rem 2.8rem 2.2rem;
       max-width: 620px;
       margin: 0 auto;
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
       opacity: 0; transform: translateY(12px);
       transition: opacity 0.85s ease 0.55s, transform 0.85s ease 0.55s;
     }
@@ -313,6 +311,21 @@
     }
     .poem-foot.show {
       opacity: 1; transform: none;
+    }
+    /* glow on ::after so parent has no animation stacking context
+       (animation + backdrop-filter both break background-clip:text on children) */
+    .poem-foot::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 22px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.85s ease 0.55s;
+      box-shadow: 0 0 40px rgba(232,115,138,0.08), inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+    .poem-foot.show::after {
+      opacity: 1;
       animation: poemFootGlow 5s ease-in-out infinite;
     }
     @keyframes poemFootGlow {
@@ -332,7 +345,7 @@
       margin-bottom: 0.85rem;
     }
 
-    /* key phrase — gradient, bold, large */
+    /* key phrase — solid color + glow (background-clip:text fails inside Chrome composited layers) */
     .poem-foot-em {
       display: block;
       font-family: 'Playfair Display', serif;
@@ -340,10 +353,8 @@
       font-weight: 700;
       font-size: clamp(1.15rem, 2.7vw, 1.58rem);
       line-height: 1.52;
-      background: linear-gradient(135deg, #fde8ef 0%, var(--rose) 48%, var(--gold) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: var(--rose-light);
+      text-shadow: 0 0 28px rgba(247,175,192,0.55), 0 0 60px rgba(232,115,138,0.25);
     }
 
     /* ─────────────────────────────────────────
@@ -1397,11 +1408,11 @@
   /* ════════════════════════════
      SURPRISE — MUSIC + SUSTAINED EFFECTS
   ════════════════════════════ */
-  let surpriseActive  = false;
-  let burstRate       = 120;
-  let loveWordTimer   = null;
+  let surpriseActive = false;
+  let loveWordTimer  = null;
 
   const birthdayMusic = new Audio('../assets/mp3/Happy_Birthday_To_You.mp3');
+  birthdayMusic.loop  = true; /* loop so short MP3 never triggers 'ended' early */
 
   const LOVE_WORDS = [
     'yêu em 💕', 'Khánh Hà 🌸', 'mãi mãi ❤', 'sinh nhật vui 🎂',
@@ -1411,14 +1422,10 @@
 
   function spawnLoveWord() {
     if (!surpriseActive) return;
-    const t = birthdayMusic.currentTime;
-    const d = birthdayMusic.duration || 80;
-    if (t < 12 || t > d - 18) return; /* only in the gentle middle phase */
-
     const el = document.createElement('div');
     el.className = 'love-word';
     el.textContent = LOVE_WORDS[Math.floor(Math.random() * LOVE_WORDS.length)];
-    const dur = (Math.random() * 2 + 4).toFixed(2) + 's';
+    const dur = (Math.random() * 3 + 7).toFixed(2) + 's';
     Object.assign(el.style, {
       left:              (Math.random() * 68 + 12) + '%',
       bottom:            (Math.random() * 28 + 8) + '%',
@@ -1434,48 +1441,29 @@
     surpriseActive = true;
 
     const btn = document.getElementById('btn-sur');
-    btn.innerHTML      = '🎉 &nbsp; Happy Birthday, Khánh Hà! 🎂';
+    btn.innerHTML = '🎉 &nbsp; Happy Birthday, Khánh Hà! 🎂';
     btn.style.pointerEvents = 'none';
-    btn.style.opacity  = '0.65';
+    btn.style.opacity = '0.65';
 
-    /* play music; fallback to fixed duration if browser blocks autoplay */
-    let musicStarted = false;
     birthdayMusic.currentTime = 0;
-    birthdayMusic.addEventListener('playing', () => { musicStarted = true; }, { once: true });
-    birthdayMusic.play().catch(() => {
-      setTimeout(grandFinale, 150000); /* 2.5 min fallback */
-    });
+    birthdayMusic.play().catch(() => {}); /* ignore autoplay block — effects still run */
 
-    /* adjust burst rate by where we are in the song */
-    birthdayMusic.addEventListener('timeupdate', () => {
-      const t = birthdayMusic.currentTime;
-      const d = birthdayMusic.duration || 180;
-      if (t < 12)        burstRate = 120;  /* opening  – full blast   */
-      else if (t > d-18) burstRate = 100;  /* closing  – building up  */
-      else               burstRate = 260;  /* sustained – gentle rain */
-    });
+    /* grand finale always fires after 90s regardless of audio state */
+    setTimeout(grandFinale, 90000);
 
-    /* show spinning disc indicator */
     setTimeout(() => document.getElementById('music-indicator').classList.add('show'), 500);
-
-    /* ambient glow — breathes for the whole song */
     setTimeout(() => document.getElementById('celeb-glow').classList.add('active'), 300);
 
-    /* love words drift up during the gentle sustained middle phase */
-    loveWordTimer = setInterval(spawnLoveWord, 3200);
+    loveWordTimer = setInterval(spawnLoveWord, 1800);
 
-    /* extra petals for the occasion */
     for (let i = 0; i < 18; i++) petals.push(new Petal(Math.random() > 0.5));
 
-    /* ── continuous burst loop ── */
     const COLS   = ['#e8738a','#f0c060','#fde8ef','#c04566','#f7afc0','#ffffff','#f4a0b4'];
     const EMOJIS = ['🎉','🌸','💖','✨','🎂','💕','🌷','🥳','🎈','🌟'];
 
     function burst() {
       if (!surpriseActive) return;
-
-      const count = burstRate < 150 ? 10 : 6; /* fewer dots in calm phase */
-      for (let i = 0; i < count; i++) {
+      for (let i = 0; i < 8; i++) {
         const dot = document.createElement('div');
         Object.assign(dot.style, {
           position:     'fixed',
@@ -1487,17 +1475,15 @@
           background:   COLS[Math.floor(Math.random() * COLS.length)],
           pointerEvents: 'none',
           zIndex:       '99997',
-          animation:    'cPop 1s ease forwards',
+          animation:    'cPop 2s ease forwards',
         });
         dot.style.setProperty('--tx', (Math.random() - 0.5) * 200 + 'px');
         dot.style.setProperty('--ty', -(Math.random() * 160 + 60) + 'px');
         dot.style.setProperty('--tr', (Math.random() * 360) + 'deg');
         document.body.appendChild(dot);
-        setTimeout(() => dot.remove(), 1050);
+        setTimeout(() => dot.remove(), 2100);
       }
-
-      /* emoji – more frequent in intense phases */
-      if (Math.random() > (burstRate < 150 ? 0.55 : 0.32)) {
+      if (Math.random() > 0.4) {
         const em = document.createElement('div');
         Object.assign(em.style, {
           position:     'fixed',
@@ -1506,30 +1492,28 @@
           fontSize:     (Math.random() * 2.2 + 1.5) + 'rem',
           pointerEvents: 'none',
           zIndex:       '99998',
-          animation:    'ePop 1.6s ease forwards',
+          animation:    'ePop 2.8s ease forwards',
         });
         em.textContent = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
         document.body.appendChild(em);
-        setTimeout(() => em.remove(), 1700);
+        setTimeout(() => em.remove(), 2900);
       }
-
-      setTimeout(burst, burstRate);
+      setTimeout(burst, 160);
     }
     burst();
-
-    birthdayMusic.addEventListener('ended', grandFinale, { once: true });
   }
 
   function grandFinale() {
+    if (!surpriseActive) return; /* guard against double-fire */
     surpriseActive = false;
     clearInterval(loveWordTimer);
+    birthdayMusic.pause();
     document.getElementById('music-indicator').classList.remove('show');
     document.getElementById('celeb-glow').classList.remove('active');
 
-    /* intense burst for 3 seconds */
     const COLS   = ['#e8738a','#f0c060','#fde8ef','#c04566','#f7afc0','#ffffff','#f4a0b4'];
     const EMOJIS = ['🎉','💖','✨','🌟','💕','🌸','🎈','🥳','🌷'];
-    const endTs  = Date.now() + 3000;
+    const endTs  = Date.now() + 10000; /* 10-second finale burst */
 
     function finalBurst() {
       for (let i = 0; i < 20; i++) {
@@ -1544,13 +1528,13 @@
           background:   COLS[Math.floor(Math.random() * COLS.length)],
           pointerEvents: 'none',
           zIndex:       '99997',
-          animation:    'cPop 1.2s ease forwards',
+          animation:    'cPop 2.2s ease forwards',
         });
         dot.style.setProperty('--tx', (Math.random() - 0.5) * 280 + 'px');
         dot.style.setProperty('--ty', -(Math.random() * 220 + 80) + 'px');
         dot.style.setProperty('--tr', (Math.random() * 720) + 'deg');
         document.body.appendChild(dot);
-        setTimeout(() => dot.remove(), 1300);
+        setTimeout(() => dot.remove(), 2300);
       }
       const em = document.createElement('div');
       Object.assign(em.style, {
@@ -1560,18 +1544,17 @@
         fontSize:     (Math.random() * 3 + 2) + 'rem',
         pointerEvents: 'none',
         zIndex:       '99998',
-        animation:    'ePop 1.8s ease forwards',
+        animation:    'ePop 3s ease forwards',
       });
       em.textContent = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
       document.body.appendChild(em);
-      setTimeout(() => em.remove(), 1900);
-
+      setTimeout(() => em.remove(), 3100);
       if (Date.now() < endTs) setTimeout(finalBurst, 85);
     }
     finalBurst();
 
-    /* fade in love message after burst peak */
-    setTimeout(() => document.getElementById('finale-msg').classList.add('show'), 1500);
+    /* love message appears after burst peaks */
+    setTimeout(() => document.getElementById('finale-msg').classList.add('show'), 8500);
   }
   </script>
 
