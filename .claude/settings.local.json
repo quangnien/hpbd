@@ -20,7 +20,9 @@
       "Bash(node -e \"require\\('playwright-core'\\)\")",
       "Bash(node -e \"const p = require\\(require\\('path'\\).resolve\\(require\\('child_process'\\).execSync\\('npm root -g'\\).toString\\(\\).trim\\(\\), 'playwright'\\)\\); console.log\\('ok'\\)\")",
       "Bash(npm init *)",
-      "Bash(npm install *)"
+      "Bash(npm install *)",
+      "WebFetch(domain:claude.ai)",
+      "Bash(git push *)"
     ]
   }
 }

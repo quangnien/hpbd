@@ -286,11 +286,76 @@
     }
 
     .poem-foot {
-      font-size: 1rem; color: var(--sub);
+      position: relative;
+      text-align: center;
+      background: rgba(232,115,138,0.10);
+      border: 1px solid rgba(232,115,138,0.2);
+      border-radius: 22px;
+      padding: 2.2rem 2.8rem 2.2rem;
+      max-width: 620px;
+      margin: 0 auto;
       opacity: 0; transform: translateY(12px);
       transition: opacity 0.85s ease 0.55s, transform 0.85s ease 0.55s;
     }
-    .poem-foot.show { opacity: 1; transform: none; }
+    /* ✦ badge sitting on the top border */
+    .poem-foot::before {
+      content: '✦';
+      position: absolute;
+      top: -0.62rem; left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.78rem;
+      color: var(--rose);
+      background: var(--bg);
+      padding: 0 0.7rem;
+      letter-spacing: 0.12em;
+    }
+    .poem-foot.show {
+      opacity: 1; transform: none;
+    }
+    /* glow on ::after so parent has no animation stacking context
+       (animation + backdrop-filter both break background-clip:text on children) */
+    .poem-foot::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 22px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.85s ease 0.55s;
+      box-shadow: 0 0 40px rgba(232,115,138,0.08), inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+    .poem-foot.show::after {
+      opacity: 1;
+      animation: poemFootGlow 5s ease-in-out infinite;
+    }
+    @keyframes poemFootGlow {
+      0%,100% { box-shadow: 0 0 40px rgba(232,115,138,0.08), inset 0 1px 0 rgba(255,255,255,0.04); }
+      50%      { box-shadow: 0 0 75px rgba(232,115,138,0.18), inset 0 1px 0 rgba(255,255,255,0.07); }
+    }
+
+    /* intro line — quiet, sets context */
+    .poem-foot-intro {
+      display: block;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(0.88rem, 1.9vw, 1.05rem);
+      color: var(--sub);
+      letter-spacing: 0.01em;
+      margin-bottom: 0.85rem;
+    }
+
+    /* key phrase — solid color + glow (background-clip:text fails inside Chrome composited layers) */
+    .poem-foot-em {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: clamp(1.15rem, 2.7vw, 1.58rem);
+      line-height: 1.52;
+      color: var(--rose-light);
+      text-shadow: 0 0 28px rgba(247,175,192,0.55), 0 0 60px rgba(232,115,138,0.25);
+    }
 
     /* ─────────────────────────────────────────
        SECTION: GALLERY (BENTO)
@@ -856,6 +921,107 @@
     }
 
     /* ─────────────────────────────────────────
+       CELEBRATING AMBIENT GLOW
+    ───────────────────────────────────────── */
+    #celeb-glow {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 3;
+      background:
+        radial-gradient(ellipse 75% 55% at 50% 50%, rgba(232,115,138,0.14) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 35% at 20% 80%, rgba(240,192,96,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 35% at 80% 20%, rgba(192,69,102,0.08) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 1.4s ease;
+    }
+    #celeb-glow.active {
+      opacity: 1;
+      animation: celebGlow 4.5s ease-in-out infinite;
+    }
+    @keyframes celebGlow {
+      0%,100% { opacity: 0.55; }
+      50%      { opacity: 1; }
+    }
+
+    /* ─────────────────────────────────────────
+       FLOATING LOVE WORDS
+    ───────────────────────────────────────── */
+    .love-word {
+      position: fixed;
+      pointer-events: none;
+      z-index: 99995;
+      font-family: 'Dancing Script', cursive;
+      color: var(--rose-light);
+      text-shadow: 0 0 22px rgba(232,115,138,0.55);
+      opacity: 0;
+      animation: loveWordRise linear forwards;
+      white-space: nowrap;
+    }
+    @keyframes loveWordRise {
+      0%   { opacity: 0;    transform: translateY(0)      scale(0.8);  }
+      12%  { opacity: 0.88; transform: translateY(-30px)  scale(1.02); }
+      75%  { opacity: 0.7; }
+      100% { opacity: 0;    transform: translateY(-170px) scale(0.92); }
+    }
+
+    /* ─────────────────────────────────────────
+       FINALE MESSAGE
+    ───────────────────────────────────────── */
+    #finale-msg {
+      position: fixed; inset: 0;
+      z-index: 99999;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(12,5,16,0);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 1.6s ease, background 1.6s ease;
+    }
+    #finale-msg.show {
+      opacity: 1;
+      background: rgba(12,5,16,0.8);
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    .finale-inner {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      transform: scale(0.82);
+      opacity: 0;
+      transition: transform 1.5s cubic-bezier(0.16,1,0.3,1) 0.7s, opacity 1.3s ease 0.7s;
+    }
+    #finale-msg.show .finale-inner { transform: scale(1); opacity: 1; }
+    .finale-heart {
+      font-size: 5.5rem; display: block; margin-bottom: 0.7rem;
+      animation: heartPulse 1.6s ease-in-out infinite;
+      filter: drop-shadow(0 0 30px rgba(232,115,138,0.7));
+    }
+    .finale-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 900;
+      background: linear-gradient(140deg, #fde8ef 0%, var(--rose) 48%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.08;
+      margin-bottom: 0.5rem;
+    }
+    .finale-name {
+      display: block;
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(1.8rem, 4.5vw, 3.5rem);
+      color: var(--rose-light);
+      text-shadow: 0 0 50px rgba(247,175,192,0.5);
+      margin-bottom: 0.6rem;
+    }
+    .finale-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-top: 1.8rem;
+    }
+
+    /* ─────────────────────────────────────────
        SCROLL WHISPER
     ───────────────────────────────────────── */
     #scroll-whisper {
@@ -1088,7 +1254,9 @@
       #poem            { padding: 5rem 1.4rem 4rem; }
       .poem-line       { font-size: clamp(1.1rem, 5vw, 1.5rem); }
       .poem-line.en    { font-size: clamp(0.95rem, 4vw, 1.25rem); }
-      .poem-foot       { font-size: 0.9rem; }
+      .poem-foot        { padding: 1.6rem 1.5rem 1.6rem; }
+      .poem-foot-intro  { font-size: 0.82rem; }
+      .poem-foot-em     { font-size: clamp(1rem, 4.5vw, 1.25rem); }
 
       /* gallery */
       #gallery         { padding: 3rem 0.7rem 5rem; }
@@ -1162,6 +1330,9 @@
   <!-- Ambient mesh -->
   <div class="mesh-bg"></div>
 
+  <!-- Celebration ambient glow (activated by JS) -->
+  <div id="celeb-glow"></div>
+
   <!-- Rose petal canvas -->
   <canvas id="petal-canvas"></canvas>
 
@@ -1198,7 +1369,7 @@
 
     <div class="hero-polaroid">
       <img src="assets/images/hpbd_lover/IMG_2159.JPG" alt="Khánh Hà" />
-      <div class="hero-polaroid-caption">Bé iu của anh 🌸</div>
+      <div class="hero-polaroid-caption">My little love 🌸</div>
     </div>
 
     <div class="hero-scroll">
@@ -1218,8 +1389,8 @@
     <p class="poem-line en">you make everything feel like a love story.</p>
     <div class="poem-rule"></div>
     <p class="poem-foot">
-      Hôm nay là ngày của em — và anh muốn em biết rằng,
-      mỗi ngày có em là một món quà anh trân trọng hơn bất cứ điều gì.
+      <span class="poem-foot-intro">Today is your day — and I want you to know,</span>
+      <span class="poem-foot-em">every day with you is a gift I treasure more than anything.</span>
     </p>
   </section>
 
@@ -1229,13 +1400,13 @@
   <section id="gallery">
     <div class="sec-header">
       <span class="sec-tag">✦ &nbsp; our moments &nbsp; ✦</span>
-      <h2 class="sec-title">Những khoảnh khắc của chúng ta</h2>
+      <h2 class="sec-title">The moments we've shared</h2>
     </div>
 
     <div class="bento" id="bento-grid">
       <div class="bc bc-1">
         <img src="assets/images/hpbd_lover/IMG_3266.JPG" alt="Khánh Hà among tulips" />
-        <div class="bc-overlay"><span class="bc-cap">Giữa ngàn hoa 🌷</span></div>
+        <div class="bc-overlay"><span class="bc-cap">Among the flowers 🌷</span></div>
       </div>
       <div class="bc bc-2">
         <img src="assets/images/hpbd_lover/IMG_3869.JPG" alt="Birthday dinner" loading="lazy"/>
@@ -1244,31 +1415,31 @@
       </div>
       <div class="bc bc-3">
         <img src="assets/images/hpbd_lover/IMG_1540.JPG" alt="Khánh Hà selfie warm" loading="lazy"/>
-        <div class="bc-overlay"><span class="bc-cap">Đôi mắt ngây thơ 💫</span></div>
+        <div class="bc-overlay"><span class="bc-cap">Those innocent eyes 💫</span></div>
       </div>
       <div class="bc bc-4">
         <img src="assets/images/hpbd_lover/IMG_3585.JPG" alt="Khánh Hà bear hat" loading="lazy"/>
-        <div class="bc-overlay"><span class="bc-cap">Bé gấu của anh 🐻</span></div>
+        <div class="bc-overlay"><span class="bc-cap">My little bear 🐻</span></div>
       </div>
       <div class="bc bc-5">
         <img src="assets/images/hpbd_lover/IMG_2597.JPG" alt="Khánh Hà cute" loading="lazy"/>
-        <div class="bc-overlay"><span class="bc-cap">Cute thế này cơ à 💕</span></div>
+        <div class="bc-overlay"><span class="bc-cap">So adorable 💕</span></div>
       </div>
       <div class="bc bc-6">
         <img src="assets/images/hpbd_lover/att.s4qXZOGqc2FYcZiMlnBJtnMNOz0eOzOF5vydYHfnG5E.jpg" alt="Khánh Hà smiling" loading="lazy"/>
-        <div class="bc-overlay"><span class="bc-cap">Nụ cười ấy 🌸</span></div>
+        <div class="bc-overlay"><span class="bc-cap">That smile 🌸</span></div>
       </div>
       <div class="bc bc-7">
         <img src="assets/images/hpbd_lover/IMG_2106.PNG" alt="Us on the grass" loading="lazy"/>
-        <div class="bc-overlay"><span class="bc-cap">Cùng nằm nhìn trời 🌿</span></div>
+        <div class="bc-overlay"><span class="bc-cap">Lying under the open sky 🌿</span></div>
       </div>
       <div class="bc bc-8">
         <img src="assets/images/hpbd_lover/IMG_7992.JPG" alt="Us at the beach" loading="lazy"/>
-        <div class="bc-overlay"><span class="bc-cap">Biển của chúng ta 🌊</span></div>
+        <div class="bc-overlay"><span class="bc-cap">Our ocean 🌊</span></div>
       </div>
       <div class="bc bc-9">
         <img src="assets/images/hpbd_lover/IMG_3297.JPG" alt="Khánh Hà portrait" loading="lazy"/>
-        <div class="bc-overlay"><span class="bc-cap">Ánh nhìn dịu dàng ✨</span></div>
+        <div class="bc-overlay"><span class="bc-cap">That gentle gaze ✨</span></div>
       </div>
     </div>
   </section>
@@ -1278,7 +1449,7 @@
   ═══════════════════════════ -->
   <section id="letter">
     <div class="letter-card" id="letter-card">
-      <span class="letter-to">Gửi Bé iu Khánh Hà,</span>
+      <span class="letter-to">To my dearest Khánh Hà,</span>
       <div id="letter-body"></div>
       <div class="letter-sig">— Thomas 🌹</div>
     </div>
@@ -1298,8 +1469,9 @@
           "Even an ordinary day<br/>can feel <em>special</em>"
         </h2>
         <p class="feature-desc">
-          Mọi ngày thường, mọi khoảnh khắc bên em đều trở thành ký ức đáng giữ lại mãi mãi.
-          Sinh nhật của em không chỉ là một ngày — đó là ngày anh nhớ ơn cuộc đời đã cho anh gặp em.
+          Mọi khoảnh khắc bên em — dù bình thường đến đâu — đều thành ký ức anh muốn giữ lại.
+          Sinh nhật của em không chỉ là một ngày, đó là dịp để anh nói những điều đôi khi quên nói:
+          anh thấy em, anh biết ơn em, và anh rất vui vì em ở đây.
           <br /><br />
           Every single day with you is a story worth telling. Happy birthday, my love.
         </p>
@@ -1326,8 +1498,8 @@
       <span class="closing-name">Bé iu Khánh Hà</span>
     </h2>
     <p class="closing-p" id="close-p">
-      Cảm ơn em vì đã là em — vì đã ở đây, vì nụ cười đó, vì tất cả những điều em mang đến.
-      Anh yêu em rất nhiều, hơn những gì anh có thể nói bằng lời.
+      Cảm ơn em vì đã là em — vì đã ở đây, vì đã đồng hành trong một năm qua với biết bao điều xảy ra.
+      Here's to a new chapter, and all the good things ahead — together.
     </p>
     <button class="btn-surprise" id="btn-sur" onclick="launchSurprise()">
       🎉 &nbsp; Bấm để nhận surprise!
@@ -1339,8 +1511,15 @@
   </footer>
 
 
-  <!-- birthday music -->
-  <audio id="bday-music" src="assets/mp3/Happy_Birthday_To_You.mp3" preload="none"></audio>
+  <!-- Finale Message -->
+  <div id="finale-msg" onclick="this.classList.remove('show')">
+    <div class="finale-inner">
+      <span class="finale-heart">💖</span>
+      <h2 class="finale-title">Mãi yêu em</h2>
+      <span class="finale-name">Khánh Hà ❤</span>
+      <p class="finale-sub">nhấn để đóng</p>
+    </div>
+  </div>
 
   <!-- music playing indicator -->
   <div id="music-indicator" role="status" aria-label="Đang phát nhạc" aria-live="polite">
@@ -1525,7 +1704,7 @@
   /* ════════════════════════════
      TYPEWRITER LOVE LETTER
   ════════════════════════════ */
-  const LETTER = `Khánh Hà ơi,\n\nHôm nay là sinh nhật của em, và anh muốn nói với em một điều mà đôi khi anh chưa nói đủ:\n\nEm không chỉ là người anh yêu — em là người làm cho mỗi buổi sáng thêm ý nghĩa, mỗi bức ảnh thêm đẹp, mỗi hành trình thêm đáng nhớ.\n\nAnh yêu cái cách em nhìn thế giới bằng đôi mắt tò mò sau cặp kính ấy. Anh yêu nụ cười của em khi em không biết ai đang nhìn. Anh yêu những khoảnh khắc yên lặng bên em — giữa vườn hoa, bên bờ biển, hay chỉ là nằm cạnh nhau trên bãi cỏ.\n\nToday, on your birthday, I want you to know: you are deeply loved. Not just by me, but by every moment that led us here together.\n\nChúc em sinh nhật thật vui, thật ý nghĩa — và biết rằng, dù ngày mai ra sao, anh vẫn luôn ở đây.\n\nMãi yêu em.`;
+  const LETTER = `Khánh Hà,\n\nAs I've said before — "Even an ordinary day can feel special."\nAnd I mean it. Every ordinary moment with you somehow turns into a memory worth keeping.\n\nBut today is a special one.\n\nYour birthday isn't just a birthday to me. It's the one day a year I get to say all the things that don't always make it into conversation — that I love you, that I see you, and that I'm genuinely glad you're here.\n\nThis past year brought a lot — for both of us. More than either of us planned for. But through all of it, you were there. You showed up, you stayed, and you gave more than you had to. Anh không bao giờ quên điều đó.\n\nI hope this new year brings you the things you deserve: more happiness, more laughter, and more time — time for yourself, and time for us.\n\nCuộc sống không phải lúc nào cũng diễn ra như mình muốn. But I hope you face whatever comes with a calm heart — and remember that you don't have to face it alone.\n\nHere's to a new chapter. New things, new growth — let's figure it out together.\n\nThis present isn't valuable in itself — but it's a keepsake of this moment. It carries almost all of my warmest feelings.\n\nHappy birthday to you.\nLove you. Always.`;
 
   const letterBody = document.getElementById('letter-body');
   let ltIdx = 0, ltStarted = false;
@@ -1553,90 +1732,173 @@
   }
 
   /* ════════════════════════════
-     SURPRISE FIREWORKS + MUSIC
+     SURPRISE — MUSIC + SUSTAINED EFFECTS
   ════════════════════════════ */
-  const music    = document.getElementById('bday-music');
+  let surpriseActive = false;
+  let loveWordTimer  = null;
+
+  const birthdayMusic = new Audio('assets/mp3/Happy_Birthday_To_You.mp3');
+  birthdayMusic.loop  = true; /* loop so short MP3 never triggers ended early */
+
   const musicInd = document.getElementById('music-indicator');
   const wowOvl   = document.getElementById('wow-overlay');
   const btnSur   = document.getElementById('btn-sur');
 
+  const LOVE_WORDS = [
+    'yêu em 💕', 'Khánh Hà 🌸', 'mãi mãi ❤', 'sinh nhật vui 🎂',
+    'bé iu 🥰', 'forever ✨', 'anh yêu em', 'happy birthday 🎈',
+    'forever & always 💖', 'em là tất cả 🌷',
+  ];
+
+  function spawnLoveWord() {
+    if (!surpriseActive) return;
+    const el = document.createElement('div');
+    el.className = 'love-word';
+    el.textContent = LOVE_WORDS[Math.floor(Math.random() * LOVE_WORDS.length)];
+    const dur = (Math.random() * 3 + 7).toFixed(2) + 's';
+    Object.assign(el.style, {
+      left:              (Math.random() * 68 + 12) + '%',
+      bottom:            (Math.random() * 28 + 8) + '%',
+      fontSize:          (Math.random() * 1.3 + 1.05) + 'rem',
+      animationDuration: dur,
+    });
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), parseFloat(dur) * 1000 + 200);
+  }
+
   function launchSurprise() {
-    /* ── play music from 2:20 ── */
-    music.currentTime = 140;
-    music.play().catch(() => {});
-    music.onended = hideMusicIndicator;
+    if (surpriseActive) return;
+    surpriseActive = true;
 
-    /* ── button state ── */
-    btnSur.innerHTML = '<span class="btn-disc-icon" aria-hidden="true"></span>';
-    btnSur.classList.add('playing');
+    btnSur.innerHTML = '🎉 &nbsp; Happy Birthday, Khánh Hà! 🎂';
+    btnSur.style.pointerEvents = 'none';
+    btnSur.style.opacity = '0.65';
 
-    /* ── music indicator ── */
-    musicInd.classList.add('visible');
+    birthdayMusic.currentTime = 150.5;
+    birthdayMusic.play().catch(() => {});
 
-    /* ── wow overlay ── */
+    /* wow overlay */
     wowOvl.classList.remove('active');
-    void wowOvl.offsetWidth; /* reflow to restart animation */
+    void wowOvl.offsetWidth;
     wowOvl.classList.add('active');
 
-    /* ── confetti burst (7 s) ── */
-    const dur = 7000, end = Date.now() + dur;
+    /* grand finale fires after 90s regardless of audio state */
+    setTimeout(grandFinale, 90000);
+
+    setTimeout(() => musicInd.classList.add('visible'), 500);
+    setTimeout(() => document.getElementById('celeb-glow').classList.add('active'), 300);
+
+    loveWordTimer = setInterval(spawnLoveWord, 1800);
+
+    for (let i = 0; i < 18; i++) petals.push(new Petal(Math.random() > 0.5));
+
     const COLS   = ['#e8738a','#f0c060','#fde8ef','#c04566','#f7afc0','#ffffff','#f4a0b4'];
     const EMOJIS = ['🎉','🌸','💖','✨','🎂','💕','🌷','🥳','🎈','🌟'];
 
     function burst() {
-      for (let i = 0; i < 10; i++) {
+      if (!surpriseActive) return;
+      for (let i = 0; i < 8; i++) {
         const dot = document.createElement('div');
-        const tx  = (Math.random() - 0.5) * 200 + 'px';
-        const ty  = -(Math.random() * 160 + 60) + 'px';
-        const tr  = (Math.random() * 360) + 'deg';
         Object.assign(dot.style, {
-          position:     'fixed',
-          left:         Math.random() * window.innerWidth + 'px',
-          top:          Math.random() * window.innerHeight * 0.8 + 'px',
-          width:        (Math.random() * 7 + 5) + 'px',
-          height:       (Math.random() * 7 + 5) + 'px',
-          borderRadius: Math.random() > 0.5 ? '50%' : '2px',
-          background:   COLS[Math.floor(Math.random() * COLS.length)],
-          pointerEvents:'none',
-          zIndex:       '99997',
-          animation:    'cPop 1s ease forwards',
+          position:      'fixed',
+          left:          Math.random() * window.innerWidth + 'px',
+          top:           Math.random() * window.innerHeight * 0.8 + 'px',
+          width:         (Math.random() * 7 + 5) + 'px',
+          height:        (Math.random() * 7 + 5) + 'px',
+          borderRadius:  Math.random() > 0.5 ? '50%' : '2px',
+          background:    COLS[Math.floor(Math.random() * COLS.length)],
+          pointerEvents: 'none',
+          zIndex:        '99997',
+          animation:     'cPop 2s ease forwards',
         });
-        dot.style.setProperty('--tx', tx);
-        dot.style.setProperty('--ty', ty);
-        dot.style.setProperty('--tr', tr);
+        dot.style.setProperty('--tx', (Math.random() - 0.5) * 200 + 'px');
+        dot.style.setProperty('--ty', -(Math.random() * 160 + 60) + 'px');
+        dot.style.setProperty('--tr', (Math.random() * 360) + 'deg');
         document.body.appendChild(dot);
-        setTimeout(() => dot.remove(), 1050);
+        setTimeout(() => dot.remove(), 2100);
       }
-      if (Math.random() > 0.5) {
+      if (Math.random() > 0.4) {
         const em = document.createElement('div');
         Object.assign(em.style, {
-          position:     'fixed',
-          left:         Math.random() * window.innerWidth + 'px',
-          top:          Math.random() * window.innerHeight * 0.75 + 'px',
-          fontSize:     (Math.random() * 2.2 + 1.5) + 'rem',
-          pointerEvents:'none',
-          zIndex:       '99998',
-          animation:    'ePop 1.6s ease forwards',
+          position:      'fixed',
+          left:          Math.random() * window.innerWidth + 'px',
+          top:           Math.random() * window.innerHeight * 0.75 + 'px',
+          fontSize:      (Math.random() * 2.2 + 1.5) + 'rem',
+          pointerEvents: 'none',
+          zIndex:        '99998',
+          animation:     'ePop 2.8s ease forwards',
         });
         em.textContent = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
         document.body.appendChild(em);
-        setTimeout(() => em.remove(), 1700);
+        setTimeout(() => em.remove(), 2900);
       }
-      if (Date.now() < end) setTimeout(burst, 110);
+      setTimeout(burst, 160);
     }
     burst();
   }
 
-  function stopMusic() {
-    music.pause();
-    music.currentTime = 0;
-    hideMusicIndicator();
-    btnSur.innerHTML = '🎉 &nbsp;Bấm để nhận surprise!';
-    btnSur.classList.remove('playing');
+  function grandFinale() {
+    if (!surpriseActive) return;
+    surpriseActive = false;
+    clearInterval(loveWordTimer);
+    birthdayMusic.pause();
+    musicInd.classList.remove('visible');
+    document.getElementById('celeb-glow').classList.remove('active');
+
+    const COLS   = ['#e8738a','#f0c060','#fde8ef','#c04566','#f7afc0','#ffffff','#f4a0b4'];
+    const EMOJIS = ['🎉','💖','✨','🌟','💕','🌸','🎈','🥳','🌷'];
+    const endTs  = Date.now() + 10000;
+
+    function finalBurst() {
+      for (let i = 0; i < 20; i++) {
+        const dot = document.createElement('div');
+        Object.assign(dot.style, {
+          position:      'fixed',
+          left:          Math.random() * window.innerWidth + 'px',
+          top:           Math.random() * window.innerHeight * 0.9 + 'px',
+          width:         (Math.random() * 10 + 5) + 'px',
+          height:        (Math.random() * 10 + 5) + 'px',
+          borderRadius:  Math.random() > 0.4 ? '50%' : '2px',
+          background:    COLS[Math.floor(Math.random() * COLS.length)],
+          pointerEvents: 'none',
+          zIndex:        '99997',
+          animation:     'cPop 2.2s ease forwards',
+        });
+        dot.style.setProperty('--tx', (Math.random() - 0.5) * 280 + 'px');
+        dot.style.setProperty('--ty', -(Math.random() * 220 + 80) + 'px');
+        dot.style.setProperty('--tr', (Math.random() * 720) + 'deg');
+        document.body.appendChild(dot);
+        setTimeout(() => dot.remove(), 2300);
+      }
+      const em = document.createElement('div');
+      Object.assign(em.style, {
+        position:      'fixed',
+        left:          Math.random() * window.innerWidth + 'px',
+        top:           Math.random() * window.innerHeight * 0.8 + 'px',
+        fontSize:      (Math.random() * 3 + 2) + 'rem',
+        pointerEvents: 'none',
+        zIndex:        '99998',
+        animation:     'ePop 3s ease forwards',
+      });
+      em.textContent = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+      document.body.appendChild(em);
+      setTimeout(() => em.remove(), 3100);
+      if (Date.now() < endTs) setTimeout(finalBurst, 85);
+    }
+    finalBurst();
+
+    setTimeout(() => document.getElementById('finale-msg').classList.add('show'), 8500);
   }
 
-  function hideMusicIndicator() {
+  function stopMusic() {
+    surpriseActive = false;
+    clearInterval(loveWordTimer);
+    birthdayMusic.pause();
     musicInd.classList.remove('visible');
+    document.getElementById('celeb-glow').classList.remove('active');
+    btnSur.innerHTML = '🎉 &nbsp; Bấm để nhận surprise!';
+    btnSur.style.pointerEvents = '';
+    btnSur.style.opacity = '';
   }
 
   /* ════════════════════════════
