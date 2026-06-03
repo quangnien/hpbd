@@ -237,12 +237,12 @@ prsn/
 | Period | Title | Company | Project | Tech |
 |---|---|---|---|---|
 | 2025 – Present | Java Software Engineer | Amaris Consulting | Fintech Platform (confidential) | Java, Spring Boot, Microservices |
-| Mar–May 2025 | Java Software Engineer | Smartee Vina | KimFund (fund cert & investment) | Java, Spring Boot, Spring Security, PostgreSQL |
+| Mar–June 2025 | Java Software Engineer | Smartee Vina | KimFund (fund cert & investment) | Java, Spring Boot, Spring Security, PostgreSQL |
 | Aug 2024–Mar 2025 | Java Backend Developer | Smartee Vina | MES (Manufacturing Execution System) | Java, Spring Boot, JPA/Hibernate, MySQL |
 | Mar–Aug 2024 | Java Software Engineer | Smartee Vina | FLAT (Franchise Platform) | Java, Spring Boot, PostgreSQL, Microservices |
 | Aug 2023–Mar 2024 | Java Software Engineer | Smartee Vina | SSL (certificate sales platform) | Java, Spring Boot, Spring Security, PostgreSQL |
 | Jun 2022–Apr 2023 | Java Software Engineer | UNIT Company | RTP for ACH System (HSBC/Samsung) | Java, Spring Boot, Apache Kafka, PostgreSQL |
-| Jan–May 2022 | Java Software Engineer | UNIT Company | Web-Admin 4.0 (legacy migration) | Java, Spring MVC, Spring Boot, Oracle DB |
+| Jan–June 2022 | Java Software Engineer | UNIT Company | Web-Admin 4.0 (legacy migration) | Java, Spring MVC, Spring Boot, Oracle DB |
 
 ---
 
